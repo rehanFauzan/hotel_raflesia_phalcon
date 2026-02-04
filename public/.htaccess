@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+    # Disable MultiViews to avoid content-negotiation conflicts
+    Options -MultiViews
+
+    RewriteEngine On
+    # If your app is served from a subdirectory, set RewriteBase accordingly.
+    # Example for http://localhost/hotel_reservasi_raflesia/ -> use /hotel_reservasi_raflesia/
+    # RewriteBase /
+
+    # If the request is not to an existing file or directory, route to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+
+</IfModule>
+
+# Fallback for servers without mod_rewrite: try to serve index.php
+
+<IfModule !mod_rewrite.c>
+ErrorDocument 404 /index.php
+</IfModule>

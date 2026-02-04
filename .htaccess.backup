@@ -1,0 +1,43 @@
+# Rule dari rewrite adalah:
+# - Jika request adalah file apapun yang ada di folder public,
+#   maka return file tersebut
+# - Jika request adalah public/{file apapun didalamnya},
+#   maka return file tersebut.
+# - Jika request adalah file apapun selain di folder public
+#   maka return public/index.php/url
+# - Jika request me-return sebuah folder, maka respon 403
+#
+# Rule ini bertujuan untuk melindungi file-file selain di folder
+# public agar tidak dapat diakses oleh public
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Setup path variable(s)
+  RewriteCond %{REQUEST_URI}::$1 "^/(.+)(.+)::\2$"
+  RewriteRule ^(.*) - [E=BASE:%1,E=RELPATH:%2]
+
+  # Public path
+  RewriteCond %{REQUEST_FILENAME} -s [OR]
+  RewriteCond %{REQUEST_FILENAME} -l [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^public/(.*)$ public/$1 [L]
+
+  # Public path with no public/ prefix
+  RewriteCond %{DOCUMENT_ROOT}/%{ENV:BASE}public/%{ENV:RELPATH} -s [OR]
+  RewriteCond %{DOCUMENT_ROOT}/%{ENV:BASE}public/%{ENV:RELPATH} -l [OR]
+  RewriteCond %{DOCUMENT_ROOT}/%{ENV:BASE}public/%{ENV:RELPATH} -d
+  RewriteRule ^(.*)$ public/$1 [L]
+
+  # Setup forbidden path
+  RewriteCond %{REQUEST_FILENAME} -s
+  RewriteCond %{ENV:RELPATH} !^public/
+  RewriteRule ^.*$ - [F,L]
+
+  # Rewrite any nonexist file to public/index.php
+  RewriteRule ^(.*)$ public/index.php [END,E=!BASE,E=!RELPATH,L]
+</IfModule>
+
+Options -Indexes
+
+SetEnvIf SERVER_ADDR "^(?:127\.0\.0\.\d+|::1)" ENV=development
