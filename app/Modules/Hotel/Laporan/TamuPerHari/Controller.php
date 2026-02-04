@@ -34,18 +34,19 @@ class Controller extends BaseController
     public function datatableAction()
     {
         $builder = $this->modelsManager->createBuilder()
-            ->columns('t.id, t.nama_lengkap, t.jenis_identitas, t.no_identitas, t.jenis_kelamin, t.no_telepon, r.nomor_kamar, p.tanggal_checkin, p.status')
+            ->columns('t.id, t.nama_lengkap, t.jenis_identitas, t.no_identitas, t.jenis_kelamin, t.no_telepon, r.nomor_kamar as nomor_kamar, p.tanggal_checkin, p.status')
             ->from(['t' => 'App\\Modules\\Hotel\\Master\\Tamu\\Model'])
             ->leftJoin('App\\Modules\\Hotel\\ReferensiData\\Pemesanan\\Model', 't.id = p.tamu_id', 'p')
             ->leftJoin('App\\Modules\\Hotel\\Master\\Kamar\\Model', 'p.ruangan_id = r.id', 'r')
             ->where("p.status IN ('checkin', 'checkout')")
             ->orderBy("p.tanggal_checkin DESC");
 
-        // Filter berdasarkan tanggal
+        // Filter berdasarkan tanggal (default hari ini)
         $searchTanggal = $this->request->getPost('search_tanggal');
-        if (!empty($searchTanggal)) {
-            $builder->andWhere("DATE(p.tanggal_checkin) = :tanggal:", ['tanggal' => $searchTanggal]);
+        if (empty($searchTanggal)) {
+            $searchTanggal = date('Y-m-d'); // Default ke hari ini
         }
+        $builder->andWhere("DATE(p.tanggal_checkin) = :tanggal:", ['tanggal' => $searchTanggal]);
 
         // Filter berdasarkan status
         $searchStatus = $this->request->getPost('search_status');
