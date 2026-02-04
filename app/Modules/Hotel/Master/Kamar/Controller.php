@@ -37,8 +37,6 @@ class Controller extends BaseController
     public function getTipeKamarAction()
     {
         $tipeKamar = \App\Modules\Hotel\Master\TipeKamar\Model::find([
-            'conditions' => 'status = :status:',
-            'bind' => ['status' => 'aktif'],
             'order' => 'nama ASC'
         ]);
         
@@ -60,6 +58,18 @@ class Controller extends BaseController
             ->leftJoin('\App\Modules\Hotel\Master\TipeKamar\Model', 'k.tipe_ruangan_id = t.id', 't')
             ->where("1=1")
             ->orderBy("k.nomor_kamar ASC");
+
+        // Filter berdasarkan nomor kamar
+        $searchNomorKamar = $this->request->getPost('search_nomor_kamar');
+        if (!empty($searchNomorKamar)) {
+            $builder->andWhere("k.nomor_kamar LIKE :nomor_kamar:", ['nomor_kamar' => '%' . $searchNomorKamar . '%']);
+        }
+
+        // Filter berdasarkan status
+        $searchStatus = $this->request->getPost('search_status');
+        if (!empty($searchStatus)) {
+            $builder->andWhere("k.status = :status:", ['status' => $searchStatus]);
+        }
 
         $dataTables = new DataTable();
         $dataTables->fromBuilder($builder)->sendResponse();

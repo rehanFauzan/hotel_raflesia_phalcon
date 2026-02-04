@@ -12,7 +12,7 @@
 			<title>
 			<?= $this->session->pdam->nama_aplikasi ?>
 			-
-	Dashboard V3
+    Master - Kamar
 
 		</title>
 
@@ -312,19 +312,6 @@ if (phoenixIsRTL) {
 	</style>
 
 	
-
-	<style>
-		.bg-gradient-cardAccis {
-			background: linear-gradient(90deg,var(--c1, #111),var(--c2,#555)) !important;
-		}
-
-		.card.chart-soft {
-			border: 0;
-			border-radius: 16px;
-			background: radial-gradient(120px 80px at 95% 0%, rgba(102, 156, 245, 0.22), rgba(102, 156, 245, 0) 60%), #fff;
-		}
-	</style>
-
 
 </head>
 
@@ -2159,59 +2146,203 @@ if (navbarVerticalStyle === 'darker') {
 															</div>
 														-->
 		
-
-	<!-- 
-																				<div class="d-flex flex-center content-min-h">
-																					<div class="text-center py-9">
-																						<img class="img-fluid mb-7 d-dark-none" src="<?= $this->url->get('external_img/no-data-found.png') ?>" width="470" alt=""/><img class="img-fluid mb-7 d-light-none" src="<?= $this->url->get('external_img/no-data-found-2.png') ?>" width="470" alt=""/>
-																						<h1 class="text-body-secondary fw-normal mb-5">
-																							Create Something Beautiful.
-																						</h1>
-																						<a class="btn btn-lg btn-primary" href="#">Getting Started</a>
-																					</div>
-																				</div>
-																			-->
-
-	<div class="container-fluid py-2">
-		<!-- ROW 1 -->
-		<div
-			class="row">
-			<!-- tambahkan class chart-soft ke card -->
-			<div class="col-12">
-				<div class="card shadow-sm border-0 mb-4" style="min-height: 200px;">
-					<div class="card-body d-flex flex-column justify-content-center align-items-center">
-						<div class="row w-100">
-							<div class="col-12 text-center">
-								<img src="<?= $this->url->get('external_img/logo-pdam-13.png') ?>" alt="Sragen Logo" style="max-width: 120px; margin-bottom: 16px;">
-							</div>
-							<div class="col-12 text-center">
-								<h3 class="fw-semibold mb-1" style="color: #428ec9;">
-									Selamat Datang,
-									<span style="color: #222"><?= $this->session->user['nama'] ?></span>
-								</h3>
-								<p class="mb-0 text-muted" style="font-size: 14px;">
-									<strong>Hak Anda : <?= $this->session->user['role_nama'] ?></strong>
-									<br>
-								</p>
-								<p class="mb-0 text-muted" style="font-size: 13px;">
-									<strong>Periode Login : <?= $this->session->user['periode'] ?></strong>
-									<br>
-								</p>
-								<!-- Tanggal dan Jam -->
-								<div class="mt-3">
-									<div id="current-date" class="fw-bold text-primary mb-1" style="font-size: 16px;"></div>
-									<div id="current-time" class="fw-bold text-success" style="font-size: 18px;"></div>
-								</div>
-							</div>
-						</div>
+	<nav class="mb-3" aria-label="breadcrumb">
+		<ol class="breadcrumb mb-0">
+			<li class="breadcrumb-item">
+				<a href="#!">Master</a>
+			</li>
+			<li class="breadcrumb-item active">Kamar</li>
+		</ol>
+	</nav>
+	<div class="mb-9">
+		<div class="row g-2 mb-4">
+			<div class="col-auto">
+				<h2 class="mb-0">Kamar</h2>
+			</div>
+		</div>
+		<div id="products">
+			<div class="mb-4">
+				<div class="row g-3 justify-content-end gap-2">
+					<div class="col-auto">
+						<button class="btn btn-sm btn-outline-primary my-1" id="btn-filter">
+							<span class="fas fa-search me-2"></span>Filter
+						</button>
+						<button class="btn btn-sm btn-success my-1" id="btn-perbarui">
+							<span class="fas fa-sync me-2"></span>Perbarui
+						</button>
+						<?php if ($is_can_insert) { ?>
+						<button class="btn btn-sm btn-primary my-1" id="btn-tambah">
+							<span class="fas fa-plus me-2"></span>Tambah
+						</button>
+						<?php } ?>
+						<?php if ($is_can_update) { ?>
+						<button class="btn btn-sm btn-warning my-1" id="btn-edit">
+							<span class="fas fa-pencil-alt me-2"></span>Edit
+						</button>
+						<?php } ?>
+						<?php if ($is_can_delete) { ?>
+						<button class="btn btn-sm btn-danger my-1" id="btn-hapus">
+							<span class="fas fa-trash me-2"></span>Hapus
+						</button>
+						<?php } ?>
 					</div>
+				</div>
+			</div>
+			<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
+				<div class="table-responsive scrollbar-overlay mx-n1 px-1">
+					<table class="table table-sm fs-9 mb-0 table-striped table-bordered" id="datatables-kamar">
+						<thead>
+							<tr class="p-2 text-center">
+								<th class="sort px-2" scope="col">No</th>
+								<th class="sort px-2" scope="col">Nomor Kamar</th>
+								<th class="sort px-2" scope="col">Tipe Kamar</th>
+								<th class="sort px-2" scope="col">Lantai</th>
+								<th class="sort px-2" scope="col">Status</th>
+								<th class="sort px-2" scope="col">Keterangan</th>
+							</tr>
+						</thead>
+						<tbody class="list" id="kamar-table-body">
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- FontAwesome trigger element -->
-	<div class="fa-icon-wait" style="display: none;"></div>
+	<!-- Filter Modal -->
+	<div class="modal fade" id="filterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="filterModal" aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
+			<div class="modal-content bg-body-highlight p-6">
+				<div class="modal-header justify-content-between border-0 p-0 mb-2">
+					<h3 class="mb-0">Filter Data Kamar</h3>
+					<button class="btn btn-sm btn-phoenix-secondary" data-bs-dismiss="modal" aria-label="Close">
+						<span class="fas fa-times text-danger"></span>
+					</button>
+				</div>
+				<div class="modal-body px-0">
+					<div class="row g-4">
+						<div class="col-lg-12">
+							<form id="form-filter">
+								<div class="mb-3">
+									<label class="text-body-highlight fw-bold mb-2">Nomor Kamar</label>
+									<div class="input-group">
+										<div class="input-group-text">
+											<input class="form-check-input toggle-input" type="checkbox"/>
+										</div>
+										<input class="form-control" type="text" id="search_nomor_kamar" name="search_nomor_kamar" placeholder="Cari berdasarkan nomor kamar..."/>
+									</div>
+								</div>
+
+								<div class="mb-3">
+									<label class="text-body-highlight fw-bold mb-2">Status</label>
+									<div class="input-group">
+										<div class="input-group-text">
+											<input class="form-check-input toggle-input" type="checkbox"/>
+										</div>
+										<div class="form-control">
+											<select name="search_status" id="search_status" class="form-control">
+												<option value="">Pilih Status</option>
+												<option value="tersedia">Tersedia</option>
+												<option value="terisi">Terisi</option>
+												<option value="maintenance">Maintenance</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer border-0 pt-6 px-0 pb-0">
+					<button class="btn btn-lighter-grey px-3 my-0" data-bs-dismiss="modal" aria-label="Close">
+						Batal
+					</button>
+					<button class="btn btn-primary my-0" id="btn-search">Cari Data</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add/Edit Modal -->
+	<div class="modal fade" id="kamarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="kamarModal" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content bg-body-highlight p-6">
+				<div class="modal-header justify-content-between border-0 p-0 mb-2">
+					<h3 class="mb-0" id="modal-title">Tambah Data Kamar</h3>
+					<button class="btn btn-sm btn-phoenix-secondary" data-bs-dismiss="modal" aria-label="Close">
+						<span class="fas fa-times text-danger"></span>
+					</button>
+				</div>
+				<div class="modal-body px-0">
+					<form id="form-kamar">
+						<input type="hidden" id="id_edit" name="id_edit">
+						
+						<div class="mb-3">
+							<label class="text-body-highlight fw-bold mb-2">Nomor Kamar <span class="text-danger">*</span></label>
+							<input class="form-control" type="text" id="nomor_kamar" name="nomor_kamar" placeholder="Masukkan nomor kamar" required/>
+						</div>
+
+						<div class="mb-3">
+							<label class="text-body-highlight fw-bold mb-2">Tipe Kamar <span class="text-danger">*</span></label>
+							<select class="form-control" id="tipe_ruangan_id" name="tipe_ruangan_id" required>
+								<option value="">Pilih Tipe Kamar</option>
+							</select>
+						</div>
+
+						<div class="mb-3">
+							<label class="text-body-highlight fw-bold mb-2">Lantai <span class="text-danger">*</span></label>
+							<input class="form-control" type="number" id="lantai" name="lantai" placeholder="Masukkan lantai" min="1" required/>
+						</div>
+
+						<div class="mb-3">
+							<label class="text-body-highlight fw-bold mb-2">Status <span class="text-danger">*</span></label>
+							<select class="form-control" id="status" name="status" required>
+								<option value="">Pilih Status</option>
+								<option value="tersedia">Tersedia</option>
+								<option value="terisi">Terisi</option>
+								<option value="maintenance">Maintenance</option>
+							</select>
+						</div>
+
+						<div class="mb-3">
+							<label class="text-body-highlight fw-bold mb-2">Keterangan</label>
+							<textarea class="form-control" id="keterangan" name="keterangan" rows="3" placeholder="Masukkan keterangan (opsional)"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer border-0 pt-6 px-0 pb-0">
+					<button class="btn btn-lighter-grey px-3 my-0" data-bs-dismiss="modal" aria-label="Close">
+						Batal
+					</button>
+					<button class="btn btn-primary my-0" id="btn-save">Simpan</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Delete Modal -->
+	<div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content bg-body-highlight p-6">
+				<div class="modal-header justify-content-between border-0 p-0 mb-2">
+					<h3 class="mb-0">Konfirmasi Hapus</h3>
+					<button class="btn btn-sm btn-phoenix-secondary" data-bs-dismiss="modal" aria-label="Close">
+						<span class="fas fa-times text-danger"></span>
+					</button>
+				</div>
+				<div class="modal-body px-0">
+					<p>Apakah Anda yakin ingin menghapus data kamar ini?</p>
+					<input type="hidden" id="id_delete" name="id_delete">
+				</div>
+				<div class="modal-footer border-0 pt-6 px-0 pb-0">
+					<button class="btn btn-lighter-grey px-3 my-0" data-bs-dismiss="modal" aria-label="Close">
+						Batal
+					</button>
+					<button class="btn btn-danger my-0" id="btn-delete">Hapus</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -2361,9 +2492,7 @@ if (navbarVerticalStyle === 'darker') {
 		</span>
 	</div>
 </div>
-<small class="text-uppercase text-body-tertiary fw-bold py-2 pe-2 ps-1 rounded-end">customize</small></div></a><!-- ===============================================--><!--    JavaScripts--><!-- ===============================================--><script src="<?= $this->url->get('vendors') ?>/popper/popper.min.js"> </script><script src="<?= $this->url->get('vendors') ?>/bootstrap/bootstrap.min.js"></script><script src="<?= $this->url->get('vendors') ?>/anchorjs/anchor.min.js"></script><script src="<?= $this->url->get('vendors') ?>/is/is.min.js"></script><script src="<?= $this->url->get('vendors') ?>/fontawesome/all.min.js"></script><script src="<?= $this->url->get('vendors') ?>/lodash/lodash.min.js"></script><script src="<?= $this->url->get('vendors') ?>/list.js/list.min.js"></script><script src="<?= $this->url->get('vendors') ?>/feather-icons/feather.min.js"></script><script src="<?= $this->url->get('vendors') ?>/dayjs/dayjs.min.js"></script><script src="<?= $this->url->get('vendors') ?>/choices/choices.min.js"></script><script src="<?= $this->url->get('vendors') ?>/prism/prism.js"></script><script src="<?= $this->url->get('assets') ?>/js/phoenix.js"></script><script src="<?= $this->url->get('lib_independent') ?>/jquery-3.7.1.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/dataTables.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/dataTables.bootstrap5.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/select2.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/jquery-confirm.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/notyf.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/jquery.validate.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/additional-methods.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/flatpickr.js"></script><script src="<?= $this->url->get('lib_independent') ?>/index.js"></script><script src="<?= $this->url->get('lib_independent') ?>/id.js"></script><script src="<?= $this->url->get('lib_independent') ?>/moment-with-locales.min.js"></script><script src="<?= $this->url->get('vendors') ?>/summernote-0.9.0/summernote-bs5.min.js"></script><script src="<?= $this->url->get('vendors') ?>/bootstrap-datepicker-1.9.0/js/bootstrap-datepicker.min.js"></script><script src="<?= $this->url->get('vendors') ?>/bootstrap-datepicker-1.9.0/locales/bootstrap-datepicker.id.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.10.8/autoNumeric.min.js" integrity="sha512-mD/vCchTqwSnIslMzOI7zbNeTNDqosvT7VvrNHo5xJDvg5hCpCvvct0QtHtrHouaWsI3ofL4B7nNaF8pDfg3Yw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js" integrity="sha512-KaIyHb30iXTXfGyI9cyKFUIRSSuekJt6/vqXtyQKhQP6ozZEGY8nOtRS6fExqE4+RbYHus2yGyYg1BrqxzV6YA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js" integrity="sha512-d4KkQohk+HswGs6A1d6Gak6Bb9rMWtxjOa0IiY49Q3TeFd5xAzjWXDCBW9RS7m86FQ4RzM2BdHmdJnnKRYknxw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://js.sentry-cdn.com/acc8669eb2c41a158d9ebd151d0aef12.min.js" crossorigin="anonymous"></script><!-- <script src="https://cdn.jsdelivr.net/npm/summernote-cleaner@1.0.0/summernote-cleaner.min.js"></script> --><script src="<?= $this->url->get('lib_independent') ?>/shortcut.js"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="<?= $this->url->get('vendors') ?>/echarts/echarts.min.js"></script>
-<script>// Terapkan lokal Indonesia
+<small class="text-uppercase text-body-tertiary fw-bold py-2 pe-2 ps-1 rounded-end">customize</small></div></a><!-- ===============================================--><!--    JavaScripts--><!-- ===============================================--><script src="<?= $this->url->get('vendors') ?>/popper/popper.min.js"> </script><script src="<?= $this->url->get('vendors') ?>/bootstrap/bootstrap.min.js"></script><script src="<?= $this->url->get('vendors') ?>/anchorjs/anchor.min.js"></script><script src="<?= $this->url->get('vendors') ?>/is/is.min.js"></script><script src="<?= $this->url->get('vendors') ?>/fontawesome/all.min.js"></script><script src="<?= $this->url->get('vendors') ?>/lodash/lodash.min.js"></script><script src="<?= $this->url->get('vendors') ?>/list.js/list.min.js"></script><script src="<?= $this->url->get('vendors') ?>/feather-icons/feather.min.js"></script><script src="<?= $this->url->get('vendors') ?>/dayjs/dayjs.min.js"></script><script src="<?= $this->url->get('vendors') ?>/choices/choices.min.js"></script><script src="<?= $this->url->get('vendors') ?>/prism/prism.js"></script><script src="<?= $this->url->get('assets') ?>/js/phoenix.js"></script><script src="<?= $this->url->get('lib_independent') ?>/jquery-3.7.1.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/dataTables.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/dataTables.bootstrap5.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/select2.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/jquery-confirm.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/notyf.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/jquery.validate.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/additional-methods.min.js"></script><script src="<?= $this->url->get('lib_independent') ?>/flatpickr.js"></script><script src="<?= $this->url->get('lib_independent') ?>/index.js"></script><script src="<?= $this->url->get('lib_independent') ?>/id.js"></script><script src="<?= $this->url->get('lib_independent') ?>/moment-with-locales.min.js"></script><script src="<?= $this->url->get('vendors') ?>/summernote-0.9.0/summernote-bs5.min.js"></script><script src="<?= $this->url->get('vendors') ?>/bootstrap-datepicker-1.9.0/js/bootstrap-datepicker.min.js"></script><script src="<?= $this->url->get('vendors') ?>/bootstrap-datepicker-1.9.0/locales/bootstrap-datepicker.id.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.10.8/autoNumeric.min.js" integrity="sha512-mD/vCchTqwSnIslMzOI7zbNeTNDqosvT7VvrNHo5xJDvg5hCpCvvct0QtHtrHouaWsI3ofL4B7nNaF8pDfg3Yw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js" integrity="sha512-KaIyHb30iXTXfGyI9cyKFUIRSSuekJt6/vqXtyQKhQP6ozZEGY8nOtRS6fExqE4+RbYHus2yGyYg1BrqxzV6YA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js" integrity="sha512-d4KkQohk+HswGs6A1d6Gak6Bb9rMWtxjOa0IiY49Q3TeFd5xAzjWXDCBW9RS7m86FQ4RzM2BdHmdJnnKRYknxw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://js.sentry-cdn.com/acc8669eb2c41a158d9ebd151d0aef12.min.js" crossorigin="anonymous"></script><!-- <script src="https://cdn.jsdelivr.net/npm/summernote-cleaner@1.0.0/summernote-cleaner.min.js"></script> --><script src="<?= $this->url->get('lib_independent') ?>/shortcut.js"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script><script>// Terapkan lokal Indonesia
 // flatpickr.l10ns.id.firstDayOfWeek = 1;
 // flatpickr.localize(flatpickr.l10ns.id);
 
@@ -2468,156 +2597,289 @@ $(e.currentTarget).data('datepicker').hide(); // Sembunyikan setelah pilih bulan
 function escapeHtml(str) {
 return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }</script><script>
-	window.defaultUrl = `${baseUrl}dashboard/`;
+	$(document).ready(function() {
+    let table;
+    let isEdit = false;
 
-const m_periode = '<?= $m_periode ?>';
-const y_periode = '<?= $y_periode ?>';
-const tahun_berjalan = '<?= $tahun_berjalan ?>';
-
-$(document).ready(function () {
-
-    // Update setiap detik
-    updateDateTime(); // Panggil sekali saat halaman load
-    setInterval(updateDateTime, 1000); // Update setiap 1 detik
-
-
-
-});
-
-// Function untuk update tanggal dan jam
-function updateDateTime() {
-    const now = new Date();
-
-    // Format tanggal Indonesia
-    const options = {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    };
-    const dateString = now.toLocaleDateString('id-ID', options);
-
-    // Format jam dengan detik
-    const timeString = now.toLocaleTimeString('id-ID', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
+    // Initialize DataTable
+    table = $('#datatables-kamar').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/panel/hotel/master/kamar/datatable',
+            type: 'POST',
+            data: function(d) {
+                var formData = $("#form-filter").serializeArray();
+                $.each(formData, function(key, val) {
+                    d[val.name] = val.value;
+                });
+            }
+        },
+        columns: [
+            { 
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                },
+                orderable: false,
+                searchable: false
+            },
+            { data: 'nomor_kamar', name: 'nomor_kamar' },
+            { data: 'tipe_kamar_nama', name: 'tipe_kamar_nama' },
+            { data: 'lantai', name: 'lantai' },
+            { 
+                data: 'status', 
+                name: 'status',
+                render: function(data) {
+                    let badgeClass = '';
+                    let statusText = '';
+                    
+                    switch(data) {
+                        case 'tersedia':
+                            badgeClass = 'bg-success';
+                            statusText = 'Tersedia';
+                            break;
+                        case 'terisi':
+                            badgeClass = 'bg-danger';
+                            statusText = 'Terisi';
+                            break;
+                        case 'maintenance':
+                            badgeClass = 'bg-warning';
+                            statusText = 'Maintenance';
+                            break;
+                        default:
+                            badgeClass = 'bg-secondary';
+                            statusText = data;
+                    }
+                    
+                    return `<span class="badge ${badgeClass}">${statusText}</span>`;
+                }
+            },
+            { 
+                data: 'keterangan', 
+                name: 'keterangan',
+                render: function(data) {
+                    return data ? data : '-';
+                }
+            }
+        ],
+        order: [[1, 'asc']]
     });
 
-    // Update elemen HTML
-    document.getElementById('current-date').textContent = dateString;
-    document.getElementById('current-time').textContent = `Pukul : ${timeString} WIB`;
-}
+    // Load tipe kamar options
+    function loadTipeKamar() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '/panel/hotel/master/kamar/getTipeKamar',
+                type: 'GET',
+                success: function(response) {
+                    if (response.error === 0) {
+                        let options = '<option value="">Pilih Tipe Kamar</option>';
+                        response.data.forEach(function(item) {
+                            options += `<option value="${item.id}">${item.nama}</option>`;
+                        });
+                        $('#tipe_ruangan_id').html(options);
+                        resolve(response);
+                    } else {
+                        reject(response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    reject(error);
+                }
+            });
+        });
+    }
 
+    // Initialize Select2 for filters
+    $('#search_status').select2({
+        dropdownParent: $('#filterModal'),
+        width: '100%'
+    });
 
-// Count-up halus untuk angka besar (opsional)
-function countUp(el, target) {
-    let cur = 0,
-        step = Math.max(1, Math.round(target / 40));
-    const t = setInterval(() => {
-        cur += step;
-        if (cur >= target) {
-            cur = target;
-            clearInterval(t);
+    // Initialize Select2 for form
+    $('#tipe_ruangan_id, #status').select2({
+        dropdownParent: $('#kamarModal'),
+        width: '100%'
+    });
+
+    // Toggle input functionality for filter
+    $('.toggle-input').change(function() {
+        let inputGroup = $(this).closest('.input-group');
+        let input = inputGroup.find('input[type="text"], select');
+        
+        if ($(this).is(':checked')) {
+            input.prop('disabled', false);
+        } else {
+            input.prop('disabled', true).val('').trigger('change');
         }
-        el.textContent = Number(cur).toLocaleString('id-ID');
-    }, 20);
-}
-
-function getDataVoucher() {
-
-    $.ajax({
-        type: "POST",
-        data: {
-            tahun: y_periode,
-            bulan: m_periode
-        },
-        url: defaultUrl + "getDataVoucher",
-        beforeSend: function (xhr, settings) {
-            $(".loading").removeClass("hide");
-        },
-        success: function (response) {
-            $(".loading").addClass("hide");
-            console.log("Data Voucher ", response);
-
-            let dataFetch = response.dataFetch;
-
-            if (response.error == 0) {
-                notyf.success(response.message);
-
-                const total = Number(dataFetch.total);
-                const verified = Number(dataFetch.jml_verifikasi);
-                const unverified = Number(dataFetch.jml_blm_verifikasi);
-                const unpaid = Number(dataFetch.jml_blm_bayar);
-                const paid = Number(dataFetch.jml_sudah_bayar);
-
-                // Set teks awal (format lokal)
-                const ID = new Intl.NumberFormat('id-ID');
-                document.getElementById('totalVoucher').textContent = ID.format(total);
-                document.getElementById('sudahText').textContent = ID.format(verified);
-                document.getElementById('belumText').textContent = ID.format(unverified);
-                document.getElementById('terdataText').textContent = ID.format(total);
-                document.getElementById('terbayarText').textContent = ID.format(paid);
-                document.getElementById('dariText').textContent = ID.format(verified);
-                document.getElementById('sisaText').textContent = ID.format(unpaid);
-
-                // // Progress verifikasi
-                const percent = Math.round((verified / total) * 100);
-                document.getElementById('percentText').textContent = percent;
-                document.getElementById('barVerif').style.width = percent + '%';
-
-                countUp(document.getElementById('totalVoucher'), total);
-                countUp(document.getElementById('terbayarText'), paid);
-                countUp(document.getElementById('sisaText'), unpaid);
-            } else {
-                notyf.error(response.message);
-            }
-        },
-        error: function (e) {
-            notyf.error("Error, Terjadi Kesalahan");
-            $(".loading").addClass("hide");
-        },
     });
-}
 
-function getDataLabaRugi() {
+    // Initialize all filter inputs as disabled
+    $('#form-filter input[type="text"], #form-filter select').prop('disabled', true);
 
-    $.ajax({
-        type: "POST",
-        data: {
-            tahun: y_periode,
-            bulan: m_periode
-        },
-        url: defaultUrl + "getDataLabaRugi",
-        beforeSend: function (xhr, settings) {
-            $(".loading").removeClass("hide");
-        },
-        success: function (response) {
-            $(".loading").addClass("hide");
-            console.log("Data Laba Rugi ", response);
-            let dataFetch = response.dataFetch;
-
-            if (response.error == 0) {
-                notyf.success(response.message);
-
-                $('#lbl_bulan_ini_pendapatan').text(`Rp. ${Number(dataFetch[1].pendapatan).toFixed(2).toLocaleString('id-ID')}`);
-                $('#lbl_bulan_ini_biaya').text(`Rp. ${Number(dataFetch[1].biaya).toFixed(2).toLocaleString('id-ID')}`)
-
-
-                $('#lbl_sd_bulan_ini_pendapatan').text(`Rp. ${Number(dataFetch[0].pendapatan).toFixed(2).toLocaleString('id-ID')}`);
-                $('#lbl_sd_bulan_ini_biaya').text(`Rp. ${Number(dataFetch[0].biaya).toFixed(2).toLocaleString('id-ID')}`);
-
-            } else {
-                notyf.error(response.message);
-            }
-        },
-        error: function (e) {
-            notyf.error("Error, Terjadi Kesalahan");
-            $(".loading").addClass("hide");
-        },
+    // Filter button
+    $('#btn-filter').click(function(e) {
+        e.preventDefault();
+        $('#filterModal').modal('show');
     });
-}
+
+    // Search button
+    $('#btn-search').click(function(e) {
+        e.preventDefault();
+        table.ajax.reload();
+        $('#filterModal').modal('hide');
+        notyf.success('Filter diterapkan');
+    });
+
+    // Refresh button
+    $('#btn-perbarui').click(function() {
+        table.ajax.reload();
+    });
+
+    // Add button
+    $('#btn-tambah').click(function() {
+        isEdit = false;
+        $('#modal-title').text('Tambah Data Kamar');
+        $('#form-kamar')[0].reset();
+        $('#id_edit').val('');
+        $('#tipe_ruangan_id, #status').val('').trigger('change');
+        loadTipeKamar();
+        $('#kamarModal').modal('show');
+    });
+
+    // Edit button
+    $('#btn-edit').click(function() {
+        const selectedRows = table.rows('.selected').data();
+        if (selectedRows.length === 0) {
+            notyf.error('Pilih data yang akan diedit');
+            return;
+        }
+        if (selectedRows.length > 1) {
+            notyf.error('Pilih hanya satu data untuk diedit');
+            return;
+        }
+        
+        const rowData = selectedRows[0];
+        isEdit = true;
+        $('#modal-title').text('Edit Data Kamar');
+        $('#id_edit').val(rowData.id);
+        
+        // Load tipe kamar first, then set values
+        loadTipeKamar().then(() => {
+            $('#nomor_kamar').val(rowData.nomor_kamar);
+            $('#tipe_ruangan_id').val(rowData.tipe_ruangan_id).trigger('change');
+            $('#lantai').val(rowData.lantai);
+            $('#status').val(rowData.status).trigger('change');
+            $('#keterangan').val(rowData.keterangan);
+        });
+        
+        $('#kamarModal').modal('show');
+    });
+
+    // Delete button
+    $('#btn-hapus').click(function() {
+        const selectedRows = table.rows('.selected').data();
+        if (selectedRows.length === 0) {
+            notyf.error('Pilih data yang akan dihapus');
+            return;
+        }
+        if (selectedRows.length > 1) {
+            notyf.error('Pilih hanya satu data untuk dihapus');
+            return;
+        }
+        
+        const rowData = selectedRows[0];
+        $('#id_delete').val(rowData.id);
+        $('#deleteModal').modal('show');
+    });
+
+    // Row selection - only single selection
+    $('#datatables-kamar tbody').on('click', 'tr', function() {
+        // Remove selection from all rows
+        $('#datatables-kamar tbody tr').removeClass('selected');
+        // Add selection to clicked row
+        $(this).addClass('selected');
+    });
+
+    // Save button
+    $('#btn-save').click(function() {
+        if (!$('#form-kamar')[0].checkValidity()) {
+            $('#form-kamar')[0].reportValidity();
+            return;
+        }
+
+        const formData = {
+            nomor_kamar: $('#nomor_kamar').val(),
+            tipe_ruangan_id: $('#tipe_ruangan_id').val(),
+            lantai: $('#lantai').val(),
+            status: $('#status').val(),
+            keterangan: $('#keterangan').val()
+        };
+
+        if (isEdit) {
+            formData.id_edit = $('#id_edit').val();
+        }
+
+        const url = isEdit ? '/panel/hotel/master/kamar/updateData' : '/panel/hotel/master/kamar/saveData';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            beforeSend: function() {
+                $('#btn-save').prop('disabled', true).text('Menyimpan...');
+            },
+            success: function(response) {
+                if (response.error === 0) {
+                    notyf.success(response.message);
+                    $('#kamarModal').modal('hide');
+                    table.ajax.reload();
+                } else {
+                    notyf.error(response.message);
+                }
+            },
+            error: function() {
+                notyf.error('Terjadi kesalahan sistem');
+            },
+            complete: function() {
+                $('#btn-save').prop('disabled', false).text('Simpan');
+            }
+        });
+    });
+
+    // Confirm delete
+    $('#btn-delete').click(function() {
+        const id = $('#id_delete').val();
+        
+        $.ajax({
+            url: '/panel/hotel/master/kamar/deleteData',
+            type: 'POST',
+            data: { id_delete: id },
+            beforeSend: function() {
+                $('#btn-delete').prop('disabled', true).text('Menghapus...');
+            },
+            success: function(response) {
+                if (response.error === 0) {
+                    notyf.success(response.message);
+                    $('#deleteModal').modal('hide');
+                    table.ajax.reload();
+                } else {
+                    notyf.error(response.message);
+                }
+            },
+            error: function() {
+                notyf.error('Terjadi kesalahan sistem');
+            },
+            complete: function() {
+                $('#btn-delete').prop('disabled', false).text('Hapus');
+            }
+        });
+    });
+
+    // Load tipe kamar on page load
+    loadTipeKamar();
+});
 </script><script>// FontAwesome initialization and class management
 document.addEventListener('DOMContentLoaded', function () { // Ensure FontAwesome classes are present
 function ensureFontAwesomeClasses() {

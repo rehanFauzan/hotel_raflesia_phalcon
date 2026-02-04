@@ -382,3 +382,139 @@ After     : {
 }
 Response  : true
 --------------------------------------------------------------------------------
+[2026-02-04 14:56:04] superadmin (::1) - Melakukan perubahan data pada modul atau class App\Modules\Defaults\Setting\User\UserModel
+URL       : localhost/panel/setting/user/updateData
+Controller: Defaults\Setting\User | Action: update
+Before    : {
+    "id": "13",
+    "satker_id": "0102",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$bWlwL0ZCRlRqcnJidCt5NOQUejYYrS6zeZvDnwjDl7e.oDOa\/vyPS",
+    "pass_enc": "njCgE6JtAChV7LEB37bT6NYSGy9Eh4Qy5PuT1cS379eBX7Vc3doYJFa5GN1vfus6KXPRKG4xIrRLANgQt1sUhg==",
+    "id_role": "10",
+    "state": "1"
+}
+After     : {
+    "id": "13",
+    "satker_id": "0102",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$azRHbzJzZGpqM0VwYXNRR.0ZLMV64TyAFRUvvHXJWmdp4cIEPOJTi",
+    "pass_enc": "E9MGb8uTgSKHu5KW\/9fTU8hSvlRrgqfb4QUwweiXAiLl1NIaNGZJd7FSQk8NM80+g30tcLE\/IjiCQle0gBPBOQ==",
+    "id_role": "2",
+    "state": "1"
+}
+Response  : true
+--------------------------------------------------------------------------------
+[2026-02-04 14:57:02] superadmin (::1) - Melakukan perubahan data pada modul atau class App\Modules\Defaults\Setting\User\UserModel
+URL       : localhost/panel/setting/user/updateData
+Controller: Defaults\Setting\User | Action: update
+Before    : {
+    "id": "13",
+    "satker_id": "0102",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$azRHbzJzZGpqM0VwYXNRR.0ZLMV64TyAFRUvvHXJWmdp4cIEPOJTi",
+    "pass_enc": "E9MGb8uTgSKHu5KW\/9fTU8hSvlRrgqfb4QUwweiXAiLl1NIaNGZJd7FSQk8NM80+g30tcLE\/IjiCQle0gBPBOQ==",
+    "id_role": "2",
+    "state": "1"
+}
+After     : {
+    "id": "13",
+    "satker_id": "0102",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$Q014Sk1sVCtOSnlRNDhSV.VHLsZq0UA4xEHw33PIhN0SV5ueocdCG",
+    "pass_enc": "0qpH7LPBuEqkOUa+fpCoy08b9rzdLLg9mtarFIgNnQT2z3DnQ1l7i2rosjMYnAk991yJwAXVSKcWsv7Ns6IgtA==",
+    "id_role": "10",
+    "state": "1"
+}
+Response  : true
+--------------------------------------------------------------------------------
+[2026-02-04 14:58:57] superadmin (::1) - Melakukan perubahan data pada modul atau class App\Modules\Defaults\Setting\User\UserModel
+URL       : localhost/panel/setting/user/updateData
+Controller: Defaults\Setting\User | Action: update
+Before    : {
+    "id": "13",
+    "satker_id": "0102",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$Q014Sk1sVCtOSnlRNDhSV.VHLsZq0UA4xEHw33PIhN0SV5ueocdCG",
+    "pass_enc": "0qpH7LPBuEqkOUa+fpCoy08b9rzdLLg9mtarFIgNnQT2z3DnQ1l7i2rosjMYnAk991yJwAXVSKcWsv7Ns6IgtA==",
+    "id_role": "10",
+    "state": "1"
+}
+After     : {
+    "id": "13",
+    "satker_id": "0101",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$d2RaS2RPWGhpazdYcTljMObVZm2X3UflFvFbMNSp\/ieoLYvvxvoTK",
+    "pass_enc": "J\/+mgJBYE0vDS2j6LgLJlekBfuqKssEvu9TUUnASH9oegufb8Z57Q\/wih6gJqOWUwgSDYK79B3eIGK0iIJ5VEA==",
+    "id_role": "10",
+    "state": "1"
+}
+Response  : true
+--------------------------------------------------------------------------------
+[2026-02-04 14:59:51] superadmin (::1) - Melakukan perubahan data pada modul atau class App\Modules\Defaults\Setting\User\UserModel
+URL       : localhost/panel/setting/user/updateData
+Controller: Defaults\Setting\User | Action: update
+Before    : {
+    "id": "13",
+    "satker_id": "0101",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$d2RaS2RPWGhpazdYcTljMObVZm2X3UflFvFbMNSp\/ieoLYvvxvoTK",
+    "pass_enc": "J\/+mgJBYE0vDS2j6LgLJlekBfuqKssEvu9TUUnASH9oegufb8Z57Q\/wih6gJqOWUwgSDYK79B3eIGK0iIJ5VEA==",
+    "id_role": "10",
+    "state": "1"
+}
+After     : {
+    "id": "13",
+    "satker_id": "0102",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$d3g0WFdqLzVvOTQyWDhRceX.pJumXcPG3iOiVPSPzqpkCerALaYAa",
+    "pass_enc": "+1Y4TBi6SWOIOXSjFmTw2bMQIG7G9J4rjX2I1Et5KDY6s7bxBl5lsA+n5dy0vBVPNrf0LAJWLDfvd2wX5PBWhw==",
+    "id_role": "10",
+    "state": "1"
+}
+Response  : true
+--------------------------------------------------------------------------------
+[2026-02-04 17:13:46] superadmin (::1) - Melakukan perubahan data otorisasi menu
+URL       : localhost/panel/setting/otoritas_menu//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_hak`(?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "9",
+                    "type": 2
+                },
+                {
+                    "value": "160",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                }
+            ],
+            "time": 0.00347900390625
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiMenu\/Controller"
+--------------------------------------------------------------------------------
