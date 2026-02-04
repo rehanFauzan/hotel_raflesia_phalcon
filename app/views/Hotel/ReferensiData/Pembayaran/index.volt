@@ -67,7 +67,7 @@
 					<table class="table table-sm fs-9 mb-0 table-striped table-bordered" id="datatables-pembayaran">
 						<thead>
 							<tr class="p-2 text-center">
-								<th class="sort px-2" scope="col">No</th>
+								<th class="sort px-2" scope="col">No.</th>
 								<th class="sort px-2" scope="col">Kode Booking</th>
 								<th class="sort px-2" scope="col">Tamu</th>
 								<th class="sort px-2" scope="col">Metode</th>
