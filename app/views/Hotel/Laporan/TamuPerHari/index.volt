@@ -46,7 +46,7 @@
 						</button>
 						{% if is_can_print == '1' %}
 							<button class="btn btn-sm btn-danger my-1" id="btn-print">
-								<span class="fas fa-file-pdf me-2"></span>Cetak
+								<span class="fas fa-file-pdf me-2"></span>Export PDF
 							</button>
 						{% endif %}
 					</div>

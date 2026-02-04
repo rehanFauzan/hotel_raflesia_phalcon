@@ -12,7 +12,7 @@
 			<title>
 			<?= $this->session->pdam->nama_aplikasi ?>
 			-
-    Laporan - Tamu Harian
+    Laporan - Pemesanan Kamar Dalam Satu Bulan
 
 		</title>
 
@@ -2151,13 +2151,13 @@ if (navbarVerticalStyle === 'darker') {
 			<li class="breadcrumb-item">
 				<a href="#!">Laporan</a>
 			</li>
-			<li class="breadcrumb-item active">Tamu Harian</li>
+			<li class="breadcrumb-item active">Pemesanan Kamar Dalam Satu Bulan</li>
 		</ol>
 	</nav>
 	<div class="mb-9">
 		<div class="row g-2 mb-4">
 			<div class="col-auto">
-				<h2 class="mb-0">Laporan Tamu Harian</h2>
+				<h2 class="mb-0">Pemesanan Kamar Dalam Satu Bulan</h2>
 			</div>
 		</div>
 		<div id="products">
@@ -2170,31 +2170,29 @@ if (navbarVerticalStyle === 'darker') {
 						<button class="btn btn-sm btn-success my-1" id="btn-perbarui">
 							<span class="fas fa-sync me-2"></span>Perbarui
 						</button>
-						<?php if ($is_can_print == '1') { ?>
-							<button class="btn btn-sm btn-danger my-1" id="btn-print">
-								<span class="fas fa-file-pdf me-2"></span>Export PDF
-							</button>
-						<?php } ?>
+						<button class="btn btn-sm btn-danger my-1" id="btn-export-pdf">
+							<span class="fas fa-file-pdf me-2"></span>Export PDF
+						</button>
 					</div>
 				</div>
 			</div>
 			<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
 				<div class="table-responsive scrollbar-overlay mx-n1 px-1">
-					<table class="table table-sm fs-9 mb-0 table-striped table-bordered" id="datatables-tamu-harian">
+					<table class="table table-sm fs-9 mb-0 table-striped table-bordered" id="datatables-pemesanan-bulanan">
 						<thead>
 							<tr class="p-2 text-center">
-								<th class="sort px-2" scope="col">#</th>
-								<th class="sort px-2" scope="col">Nama Tamu</th>
-								<th class="sort px-2" scope="col">Jenis Identitas</th>
-								<th class="sort px-2" scope="col">No. Identitas</th>
-								<th class="sort px-2" scope="col">Jenis Kelamin</th>
-								<th class="sort px-2" scope="col">No. Telepon</th>
-								<th class="sort px-2" scope="col">No. Kamar</th>
-								<th class="sort px-2" scope="col">Tanggal Check-in</th>
+								<th class="sort px-2" scope="col">No</th>
+								<th class="sort px-2" scope="col">Kode Booking</th>
+								<th class="sort px-2" scope="col">Tamu</th>
+								<th class="sort px-2" scope="col">Kamar</th>
+								<th class="sort px-2" scope="col">Check In</th>
+								<th class="sort px-2" scope="col">Check Out</th>
+								<th class="sort px-2" scope="col">Malam</th>
+								<th class="sort px-2" scope="col">Total Harga</th>
 								<th class="sort px-2" scope="col">Status</th>
 							</tr>
 						</thead>
-						<tbody class="list" id="tamu-harian-table-body">
+						<tbody class="list" id="pemesanan-bulanan-table-body">
 						</tbody>
 					</table>
 				</div>
@@ -2206,7 +2204,7 @@ if (navbarVerticalStyle === 'darker') {
 		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content bg-body-highlight p-6">
 				<div class="modal-header justify-content-between border-0 p-0 mb-2">
-					<h3 class="mb-0">Filter Laporan Tamu Harian</h3>
+					<h3 class="mb-0">Filter Laporan Pemesanan Bulanan</h3>
 					<button class="btn btn-sm btn-phoenix-secondary" data-bs-dismiss="modal" aria-label="Close">
 						<span class="fas fa-times text-danger"></span>
 					</button>
@@ -2216,12 +2214,37 @@ if (navbarVerticalStyle === 'darker') {
 						<div class="col-lg-12">
 							<form id="form-filter">
 								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Tanggal</label>
+									<label class="text-body-highlight fw-bold mb-2">Bulan dan Tahun</label>
 									<div class="input-group">
 										<div class="input-group-text">
 											<input class="form-check-input toggle-input" type="checkbox"/>
 										</div>
-										<input class="form-control" type="date" id="search_tanggal" name="search_tanggal"/>
+										<input class="form-control" type="month" id="search_bulan" name="search_bulan"/>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="mb-3">
+											<label class="text-body-highlight fw-bold mb-2">Tanggal Mulai</label>
+											<div class="input-group">
+												<div class="input-group-text">
+													<input class="form-check-input toggle-input" type="checkbox"/>
+												</div>
+												<input class="form-control" type="date" id="search_tanggal_mulai" name="search_tanggal_mulai"/>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="mb-3">
+											<label class="text-body-highlight fw-bold mb-2">Tanggal Selesai</label>
+											<div class="input-group">
+												<div class="input-group-text">
+													<input class="form-check-input toggle-input" type="checkbox"/>
+												</div>
+												<input class="form-control" type="date" id="search_tanggal_selesai" name="search_tanggal_selesai"/>
+											</div>
+										</div>
 									</div>
 								</div>
 
@@ -2233,25 +2256,12 @@ if (navbarVerticalStyle === 'darker') {
 										</div>
 										<div class="form-control">
 											<select name="search_status" id="search_status" class="form-control">
-												<option value="">Pilih Status</option>
-												<option value="checkin">Check-in</option>
-												<option value="checkout">Check-out</option>
-											</select>
-										</div>
-									</div>
-								</div>
-
-								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Jenis Kelamin</label>
-									<div class="input-group">
-										<div class="input-group-text">
-											<input class="form-check-input toggle-input" type="checkbox"/>
-										</div>
-										<div class="form-control">
-											<select name="search_jenis_kelamin" id="search_jenis_kelamin" class="form-control">
-												<option value="">Pilih Jenis Kelamin</option>
-												<option value="L">Laki-laki</option>
-												<option value="P">Perempuan</option>
+												<option value="">Semua Status</option>
+												<option value="menunggu">Menunggu</option>
+												<option value="dikonfirmasi">Dikonfirmasi</option>
+												<option value="checkin">Check In</option>
+												<option value="checkout">Check Out</option>
+												<option value="dibatalkan">Dibatalkan</option>
 											</select>
 										</div>
 									</div>
@@ -2525,17 +2535,12 @@ $(e.currentTarget).data('datepicker').hide(); // Sembunyikan setelah pilih bulan
 function escapeHtml(str) {
 return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }</script><script>
-	window.defaultUrl = `${baseUrl}panel/hotel/laporan/tamu-harian/`;
+	window.defaultUrl = `${baseUrl}panel/hotel/laporan/pemesanan-bulanan/`;
 var table;
 
 $(document).ready(function() {
-    // Initialize Select2 for filter dropdowns
+    // Initialize Select2 for status filter
     $('#search_status').select2({
-        dropdownParent: $('#filterModal'),
-        width: '100%'
-    });
-
-    $('#search_jenis_kelamin').select2({
         dropdownParent: $('#filterModal'),
         width: '100%'
     });
@@ -2543,7 +2548,7 @@ $(document).ready(function() {
     // Toggle input functionality for filter
     $('.toggle-input').change(function() {
         let inputGroup = $(this).closest('.input-group');
-        let input = inputGroup.find('input[type="date"], select');
+        let input = inputGroup.find('input[type="month"], input[type="date"], select');
         
         if ($(this).is(':checked')) {
             input.prop('disabled', false);
@@ -2553,7 +2558,7 @@ $(document).ready(function() {
     });
 
     // Initialize all filter inputs as disabled
-    $('#form-filter input[type="date"], #form-filter select').prop('disabled', true);
+    $('#form-filter input[type="month"], #form-filter input[type="date"], #form-filter select').prop('disabled', true);
 
     // Filter button
     $('#btn-filter').click(function(e) {
@@ -2587,6 +2592,22 @@ $(document).ready(function() {
         
         // Open PDF in new window
         window.open(pdfUrl, '_blank');
+    });
+
+    // PDF Export button
+    $('#btn-export-pdf').click(function(e) {
+        e.preventDefault();
+        
+        // Get current filter values
+        var formData = $('#form-filter').serialize();
+        var pdfUrl = defaultUrl + 'pdf';
+        
+        if (formData) {
+            pdfUrl += '?' + formData;
+        }
+        
+        // Open PDF in new window
+        window.open(pdfUrl, '_blank');
         notyf.success('PDF sedang diunduh...');
     });
 
@@ -2594,7 +2615,7 @@ $(document).ready(function() {
 });
 
 function renderViewDatatableAction() {
-    table = $("#datatables-tamu-harian").DataTable({
+    table = $("#datatables-pemesanan-bulanan").DataTable({
         ajax: {
             url: defaultUrl + "datatable",
             type: "post",
@@ -2622,32 +2643,13 @@ function renderViewDatatableAction() {
                 },
             },
             {
-                data: "nama_lengkap",
+                data: "kode_booking",
                 render: function(data, type, row, meta) {
                     return _.isEmpty(data) ? `-` : data;
                 }
             },
             {
-                data: "jenis_identitas",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data.toUpperCase();
-                }
-            },
-            {
-                data: "no_identitas",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "jenis_kelamin",
-                render: function(data, type, row, meta) {
-                    if (_.isEmpty(data)) return `-`;
-                    return data === 'L' ? 'Laki-laki' : 'Perempuan';
-                }
-            },
-            {
-                data: "no_telepon",
+                data: "tamu_nama",
                 render: function(data, type, row, meta) {
                     return _.isEmpty(data) ? `-` : data;
                 }
@@ -2661,7 +2663,25 @@ function renderViewDatatableAction() {
             {
                 data: "tanggal_checkin",
                 render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : new Date(data).toLocaleDateString('id-ID');
+                    return _.isEmpty(data) ? `-` : data;
+                }
+            },
+            {
+                data: "tanggal_checkout",
+                render: function(data, type, row, meta) {
+                    return _.isEmpty(data) ? `-` : data;
+                }
+            },
+            {
+                data: "jumlah_malam",
+                render: function(data, type, row, meta) {
+                    return _.isEmpty(data) ? `-` : data + ' malam';
+                }
+            },
+            {
+                data: "total_harga",
+                render: function(data, type, row, meta) {
+                    return _.isEmpty(data) ? `-` : 'Rp ' + new Intl.NumberFormat('id-ID').format(data);
                 }
             },
             {
@@ -2670,22 +2690,26 @@ function renderViewDatatableAction() {
                     if (_.isEmpty(data)) return `-`;
                     
                     let badgeClass = '';
-                    let statusText = '';
-                    
                     switch(data) {
+                        case 'menunggu':
+                            badgeClass = 'bg-warning';
+                            break;
+                        case 'dikonfirmasi':
+                            badgeClass = 'bg-info';
+                            break;
                         case 'checkin':
                             badgeClass = 'bg-success';
-                            statusText = 'Check-in';
                             break;
                         case 'checkout':
                             badgeClass = 'bg-secondary';
-                            statusText = 'Check-out';
+                            break;
+                        case 'dibatalkan':
+                            badgeClass = 'bg-danger';
                             break;
                         default:
                             badgeClass = 'bg-light';
-                            statusText = data.charAt(0).toUpperCase() + data.slice(1);
                     }
-                    return `<span class="badge ${badgeClass}">${statusText}</span>`;
+                    return `<span class="badge ${badgeClass}">${data.charAt(0).toUpperCase() + data.slice(1)}</span>`;
                 }
             }
         ],
@@ -2701,13 +2725,13 @@ function renderViewDatatableAction() {
                 width: "3%",
                 "text-align": "center",
             });
-            $('td', row).eq(1).css({ 'text-align': 'left' });
-            $('td', row).eq(2).css({ 'text-align': 'center' });
+            $('td', row).eq(1).css({ 'text-align': 'center' });
+            $('td', row).eq(2).css({ 'text-align': 'left' });
             $('td', row).eq(3).css({ 'text-align': 'center' });
             $('td', row).eq(4).css({ 'text-align': 'center' });
             $('td', row).eq(5).css({ 'text-align': 'center' });
             $('td', row).eq(6).css({ 'text-align': 'center' });
-            $('td', row).eq(7).css({ 'text-align': 'center' });
+            $('td', row).eq(7).css({ 'text-align': 'right' });
             $('td', row).eq(8).css({ 'text-align': 'center' });
         },
     });

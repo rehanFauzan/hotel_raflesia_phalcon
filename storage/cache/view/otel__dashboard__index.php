@@ -12,7 +12,7 @@
 			<title>
 			<?= $this->session->pdam->nama_aplikasi ?>
 			-
-    Laporan - Tamu Harian
+    Dashboard Hotel
 
 		</title>
 
@@ -2146,132 +2146,136 @@ if (navbarVerticalStyle === 'darker') {
 															</div>
 														-->
 		
-	<nav class="mb-3" aria-label="breadcrumb">
-		<ol class="breadcrumb mb-0">
-			<li class="breadcrumb-item">
-				<a href="#!">Laporan</a>
-			</li>
-			<li class="breadcrumb-item active">Tamu Harian</li>
-		</ol>
-	</nav>
-	<div class="mb-9">
-		<div class="row g-2 mb-4">
-			<div class="col-auto">
-				<h2 class="mb-0">Laporan Tamu Harian</h2>
-			</div>
-		</div>
-		<div id="products">
-			<div class="mb-4">
-				<div class="row g-3 justify-content-end gap-2">
-					<div class="col-auto">
-						<button class="btn btn-sm btn-outline-primary my-1" id="btn-filter">
-							<span class="fas fa-search me-2"></span>Filter
-						</button>
-						<button class="btn btn-sm btn-success my-1" id="btn-perbarui">
-							<span class="fas fa-sync me-2"></span>Perbarui
-						</button>
-						<?php if ($is_can_print == '1') { ?>
-							<button class="btn btn-sm btn-danger my-1" id="btn-print">
-								<span class="fas fa-file-pdf me-2"></span>Export PDF
-							</button>
-						<?php } ?>
-					</div>
-				</div>
-			</div>
-			<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
-				<div class="table-responsive scrollbar-overlay mx-n1 px-1">
-					<table class="table table-sm fs-9 mb-0 table-striped table-bordered" id="datatables-tamu-harian">
-						<thead>
-							<tr class="p-2 text-center">
-								<th class="sort px-2" scope="col">#</th>
-								<th class="sort px-2" scope="col">Nama Tamu</th>
-								<th class="sort px-2" scope="col">Jenis Identitas</th>
-								<th class="sort px-2" scope="col">No. Identitas</th>
-								<th class="sort px-2" scope="col">Jenis Kelamin</th>
-								<th class="sort px-2" scope="col">No. Telepon</th>
-								<th class="sort px-2" scope="col">No. Kamar</th>
-								<th class="sort px-2" scope="col">Tanggal Check-in</th>
-								<th class="sort px-2" scope="col">Status</th>
-							</tr>
-						</thead>
-						<tbody class="list" id="tamu-harian-table-body">
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-0">Dashboard Hotel</h2>
+            <p class="text-muted">Ringkasan informasi hotel dan transaksi</p>
+        </div>
+    </div>
 
-	<div class="modal fade" id="filterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="filterModal" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-centered">
-			<div class="modal-content bg-body-highlight p-6">
-				<div class="modal-header justify-content-between border-0 p-0 mb-2">
-					<h3 class="mb-0">Filter Laporan Tamu Harian</h3>
-					<button class="btn btn-sm btn-phoenix-secondary" data-bs-dismiss="modal" aria-label="Close">
-						<span class="fas fa-times text-danger"></span>
-					</button>
-				</div>
-				<div class="modal-body px-0">
-					<div class="row g-4">
-						<div class="col-lg-12">
-							<form id="form-filter">
-								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Tanggal</label>
-									<div class="input-group">
-										<div class="input-group-text">
-											<input class="form-check-input toggle-input" type="checkbox"/>
-										</div>
-										<input class="form-control" type="date" id="search_tanggal" name="search_tanggal"/>
-									</div>
-								</div>
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card stat-card bg-body-secondary text-black">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-white bg-opacity-25 text-primary me-3">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="mb-0" id="pemesanan-bulan-ini">0</h3>
+                            <small>Pemesanan Bulan Ini</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Status</label>
-									<div class="input-group">
-										<div class="input-group-text">
-											<input class="form-check-input toggle-input" type="checkbox"/>
-										</div>
-										<div class="form-control">
-											<select name="search_status" id="search_status" class="form-control">
-												<option value="">Pilih Status</option>
-												<option value="checkin">Check-in</option>
-												<option value="checkout">Check-out</option>
-											</select>
-										</div>
-									</div>
-								</div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card stat-card bg-body-secondary text-black">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-white bg-opacity-25 text-success me-3">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div>
+                            <h3 class="mb-0" id="kamar-tersedia">0</h3>
+                            <small>Kamar Tersedia</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Jenis Kelamin</label>
-									<div class="input-group">
-										<div class="input-group-text">
-											<input class="form-check-input toggle-input" type="checkbox"/>
-										</div>
-										<div class="form-control">
-											<select name="search_jenis_kelamin" id="search_jenis_kelamin" class="form-control">
-												<option value="">Pilih Jenis Kelamin</option>
-												<option value="L">Laki-laki</option>
-												<option value="P">Perempuan</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer border-0 pt-6 px-0 pb-0">
-					<button class="btn btn-lighter-grey px-3 my-0" data-bs-dismiss="modal" aria-label="Close">
-						Batal
-					</button>
-					<button class="btn btn-primary my-0" id="btn-search">Cari Data</button>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card stat-card bg-body-secondary text-black">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-white bg-opacity-25 text-danger me-3">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div>
+                            <h3 class="mb-0" id="pembatalan-bulan-ini">0</h3>
+                            <small>Pembatalan Bulan Ini</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<?= $this->flash->output() ?>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card stat-card bg-body-secondary text-black">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-white bg-opacity-25 text-info me-3">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div>
+                            <h3 class="mb-0" id="pendapatan-bulan-ini">Rp 0</h3>
+                            <small>Pendapatan Bulan Ini</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Charts Row -->
+    <div class="row">
+        <div class="col-xl-8 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Grafik Pemesanan Per Bulan</h5>
+                </div>
+                <div class="card-body">
+                    <div class="echart-area-line-chart-example" style="min-height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Status Kamar</h5>
+                </div>
+                <div class="card-body">
+                    <div class="echart-doughnut-chart" style="min-height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Bookings -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Pemesanan Terbaru</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm" id="recent-bookings">
+                            <thead>
+                                <tr>
+                                    <th>Kode Booking</th>
+                                    <th>Tamu</th>
+                                    <th>Kamar</th>
+                                    <th>Check-in</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data akan dimuat via AJAX -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 		<footer class="footer position-absolute">
@@ -2525,192 +2529,317 @@ $(e.currentTarget).data('datepicker').hide(); // Sembunyikan setelah pilih bulan
 function escapeHtml(str) {
 return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }</script><script>
-	window.defaultUrl = `${baseUrl}panel/hotel/laporan/tamu-harian/`;
-var table;
+    window.defaultUrl = `${baseUrl}panel/hotel/dashboard/`;
 
 $(document).ready(function() {
-    // Initialize Select2 for filter dropdowns
-    $('#search_status').select2({
-        dropdownParent: $('#filterModal'),
-        width: '100%'
-    });
-
-    $('#search_jenis_kelamin').select2({
-        dropdownParent: $('#filterModal'),
-        width: '100%'
-    });
-
-    // Toggle input functionality for filter
-    $('.toggle-input').change(function() {
-        let inputGroup = $(this).closest('.input-group');
-        let input = inputGroup.find('input[type="date"], select');
-        
-        if ($(this).is(':checked')) {
-            input.prop('disabled', false);
-        } else {
-            input.prop('disabled', true).val('');
-        }
-    });
-
-    // Initialize all filter inputs as disabled
-    $('#form-filter input[type="date"], #form-filter select').prop('disabled', true);
-
-    // Filter button
-    $('#btn-filter').click(function(e) {
-        e.preventDefault();
-        $('#filterModal').modal('show');
-    });
-
-    // Search button
-    $('#btn-search').click(function(e) {
-        e.preventDefault();
-        table.ajax.reload();
-        $('#filterModal').modal('hide');
-        notyf.success('Filter diterapkan');
-    });
-
-    $('#btn-perbarui').click(function(e) {
-        e.preventDefault();
-        table.ajax.reload();
-    });
-
-    $('#btn-print').click(function(e) {
-        e.preventDefault();
-        
-        // Get current filter values
-        var formData = $('#form-filter').serialize();
-        var pdfUrl = defaultUrl + 'pdf';
-        
-        if (formData) {
-            pdfUrl += '?' + formData;
-        }
-        
-        // Open PDF in new window
-        window.open(pdfUrl, '_blank');
-        notyf.success('PDF sedang diunduh...');
-    });
-
-    renderViewDatatableAction();
+    console.log('Dashboard URL:', defaultUrl);
+    
+    // Load ECharts library if not available
+    if (typeof echarts === 'undefined') {
+        $.getScript('https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js')
+            .done(function() {
+                console.log('ECharts loaded successfully');
+                initializeDashboard();
+            })
+            .fail(function() {
+                console.error('Failed to load ECharts');
+                initializeDashboard(); // Continue with fallback
+            });
+    } else {
+        initializeDashboard();
+    }
 });
 
-function renderViewDatatableAction() {
-    table = $("#datatables-tamu-harian").DataTable({
-        ajax: {
-            url: defaultUrl + "datatable",
-            type: "post",
-            data: function(d) {
-                var formData = $("#form-filter").serializeArray();
-                $.each(formData, function(key, val) {
-                    d[val.name] = val.value;
-                });
-            },
+function initializeDashboard() {
+    loadDashboardData();
+    loadCharts();
+    loadRecentBookings();
+}
+
+function loadDashboardData() {
+    $.ajax({
+        url: defaultUrl + 'stats',
+        type: 'GET',
+        success: function(response) {
+            if (response.success) {
+                const data = response.data;
+                
+                // Update statistics cards
+                $('#pemesanan-bulan-ini').text(data.pemesanan_bulan_ini || 0);
+                $('#kamar-tersedia').text(data.kamar_tersedia || 0);
+                $('#pembatalan-bulan-ini').text(data.pembatalan_bulan_ini || 0);
+                $('#pendapatan-bulan-ini').text('Rp ' + formatCurrency(data.pendapatan_bulan_ini || 0));
+            } else {
+                console.error('Error loading stats:', response.message);
+                notyf.error('Gagal memuat data statistik: ' + (response.message || 'Unknown error'));
+            }
         },
-        serverSide: true,
-        processing: true,
-        responsive: true,
-        aaSorting: [],
-        columnDefs: [{
-            searchable: false,
-            targets: [0],
-        }],
-        columns: [
-            {
-                data: "id",
-                orderable: false,
-                render: function(data, index, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1 + ".";
-                },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', xhr.responseText);
+            notyf.error('Gagal memuat data statistik: ' + error);
+        }
+    });
+}
+
+function loadCharts() {
+    // Load monthly bookings chart
+    $.ajax({
+        url: defaultUrl + 'chart-pemesanan',
+        type: 'GET',
+        success: function(response) {
+            if (response.success) {
+                createBookingChart(response.data);
+            }
+        }
+    });
+
+    // Load room status chart
+    $.ajax({
+        url: defaultUrl + 'chart-kamar',
+        type: 'GET',
+        success: function(response) {
+            if (response.success) {
+                createRoomChart(response.data);
+            }
+        }
+    });
+}
+
+function createBookingChart(data) {
+    const chartDom = document.querySelector('.echart-area-line-chart-example');
+    if (!chartDom) {
+        console.error('Chart container not found');
+        return;
+    }
+    
+    // Check if echarts is available
+    if (typeof echarts === 'undefined') {
+        console.error('ECharts library not found');
+        chartDom.innerHTML = '<div class="text-center p-4"><p>Chart data loaded successfully</p><p>Labels: ' + data.labels.join(', ') + '</p><p>Values: ' + data.values.join(', ') + '</p></div>';
+        return;
+    }
+    
+    const myChart = echarts.init(chartDom);
+    
+    const option = {
+        tooltip: {
+            trigger: 'axis',
+            backgroundColor: 'rgba(239, 242, 246, 0.95)',
+            borderColor: '#cbd0dd',
+            textStyle: {
+                color: '#14182c'
             },
-            {
-                data: "nama_lengkap",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
+            formatter: function(params) {
+                return `
+                    <div>
+                        <h6 class="fs-9 text-body-tertiary mb-0">
+                            <svg class="svg-inline--fa fa-circle me-1" style="color: #3874ff;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path>
+                            </svg>
+                            ${params[0].name} : ${params[0].value}
+                        </h6>
+                    </div>
+                `;
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: data.labels,
+            axisLine: {
+                lineStyle: {
+                    color: '#cbd0dd'
                 }
             },
-            {
-                data: "jenis_identitas",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data.toUpperCase();
+            axisLabel: {
+                color: '#6c757d'
+            }
+        },
+        yAxis: {
+            type: 'value',
+            axisLine: {
+                lineStyle: {
+                    color: '#cbd0dd'
                 }
             },
-            {
-                data: "no_identitas",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
+            axisLabel: {
+                color: '#6c757d'
             },
-            {
-                data: "jenis_kelamin",
-                render: function(data, type, row, meta) {
-                    if (_.isEmpty(data)) return `-`;
-                    return data === 'L' ? 'Laki-laki' : 'Perempuan';
-                }
-            },
-            {
-                data: "no_telepon",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "nomor_kamar",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "tanggal_checkin",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : new Date(data).toLocaleDateString('id-ID');
-                }
-            },
-            {
-                data: "status",
-                render: function(data, type, row, meta) {
-                    if (_.isEmpty(data)) return `-`;
-                    
-                    let badgeClass = '';
-                    let statusText = '';
-                    
-                    switch(data) {
-                        case 'checkin':
-                            badgeClass = 'bg-success';
-                            statusText = 'Check-in';
-                            break;
-                        case 'checkout':
-                            badgeClass = 'bg-secondary';
-                            statusText = 'Check-out';
-                            break;
-                        default:
-                            badgeClass = 'bg-light';
-                            statusText = data.charAt(0).toUpperCase() + data.slice(1);
-                    }
-                    return `<span class="badge ${badgeClass}">${statusText}</span>`;
+            splitLine: {
+                lineStyle: {
+                    color: '#f1f3f6'
                 }
             }
-        ],
-        createdRow: function(row, data, index) {
-            $("thead").css({
-                "vertical-align": "middle",
-                "text-align": "center",
-            });
-            $("td", row).css({
-                "vertical-align": "middle"
-            });
-            $("td", row).first().css({
-                width: "3%",
-                "text-align": "center",
-            });
-            $('td', row).eq(1).css({ 'text-align': 'left' });
-            $('td', row).eq(2).css({ 'text-align': 'center' });
-            $('td', row).eq(3).css({ 'text-align': 'center' });
-            $('td', row).eq(4).css({ 'text-align': 'center' });
-            $('td', row).eq(5).css({ 'text-align': 'center' });
-            $('td', row).eq(6).css({ 'text-align': 'center' });
-            $('td', row).eq(7).css({ 'text-align': 'center' });
-            $('td', row).eq(8).css({ 'text-align': 'center' });
         },
+        series: [{
+            name: 'Pemesanan',
+            type: 'line',
+            stack: 'Total',
+            smooth: true,
+            areaStyle: {
+                color: {
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 0,
+                    y2: 1,
+                    colorStops: [{
+                        offset: 0, color: 'rgba(56, 116, 255, 0.3)'
+                    }, {
+                        offset: 1, color: 'rgba(56, 116, 255, 0.05)'
+                    }]
+                }
+            },
+            lineStyle: {
+                color: '#3874ff',
+                width: 3
+            },
+            itemStyle: {
+                color: '#3874ff'
+            },
+            data: data.values
+        }]
+    };
+    
+    myChart.setOption(option);
+    
+    // Make chart responsive
+    window.addEventListener('resize', function() {
+        myChart.resize();
     });
+}
+
+function createRoomChart(data) {
+    const chartDom = document.querySelector('.echart-doughnut-chart');
+    if (!chartDom) {
+        console.error('Chart container not found');
+        return;
+    }
+    
+    // Check if echarts is available
+    if (typeof echarts === 'undefined') {
+        console.error('ECharts library not found');
+        chartDom.innerHTML = '<div class="text-center p-4"><p>Room Status Data:</p><p>Terisi: ' + data.terisi + '</p><p>Tersedia: ' + data.tersedia + '</p><p>Maintenance: ' + data.maintenance + '</p></div>';
+        return;
+    }
+    
+    const myChart = echarts.init(chartDom);
+    
+    const option = {
+        tooltip: {
+            trigger: 'item',
+            backgroundColor: 'rgba(239, 242, 246, 0.95)',
+            borderColor: '#cbd0dd',
+            textStyle: {
+                color: '#14182c'
+            }
+        },
+        legend: {
+            bottom: '5%',
+            left: 'center',
+            textStyle: {
+                color: '#6c757d'
+            }
+        },
+        series: [{
+            name: 'Status Kamar',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            center: ['50%', '45%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+            },
+            label: {
+                show: false,
+                position: 'center'
+            },
+            emphasis: {
+                label: {
+                    show: true,
+                    fontSize: '18',
+                    fontWeight: 'bold'
+                }
+            },
+            labelLine: {
+                show: false
+            },
+            data: [
+                { value: data.terisi, name: 'Terisi', itemStyle: { color: '#dc3545' } },
+                { value: data.tersedia, name: 'Tersedia', itemStyle: { color: '#28a745' } },
+                { value: data.maintenance, name: 'Maintenance', itemStyle: { color: '#ffc107' } }
+            ]
+        }]
+    };
+    
+    myChart.setOption(option);
+    
+    // Make chart responsive
+    window.addEventListener('resize', function() {
+        myChart.resize();
+    });
+}
+
+function loadRecentBookings() {
+    $.ajax({
+        url: defaultUrl + 'recent-bookings',
+        type: 'GET',
+        success: function(response) {
+            if (response.success) {
+                let tbody = $('#recent-bookings tbody');
+                tbody.empty();
+                
+                if (response.data && response.data.length > 0) {
+                    response.data.forEach(function(booking) {
+                        let statusBadge = getStatusBadge(booking.status);
+                        let row = `
+                            <tr>
+                                <td>${booking.kode_booking || '-'}</td>
+                                <td>${booking.tamu_nama || '-'}</td>
+                                <td>${booking.nomor_kamar || '-'}</td>
+                                <td>${booking.tanggal_checkin || '-'}</td>
+                                <td>${statusBadge}</td>
+                                <td>Rp ${formatCurrency(booking.total_harga || 0)}</td>
+                            </tr>
+                        `;
+                        tbody.append(row);
+                    });
+                } else {
+                    tbody.append('<tr><td colspan="6" class="text-center">Belum ada data pemesanan</td></tr>');
+                }
+            } else {
+                console.error('Error loading recent bookings:', response.message);
+                notyf.error('Gagal memuat data pemesanan terbaru: ' + (response.message || 'Unknown error'));
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', xhr.responseText);
+            notyf.error('Gagal memuat data pemesanan terbaru: ' + error);
+        }
+    });
+}
+
+function getStatusBadge(status) {
+    const badges = {
+        'menunggu': '<span class="badge bg-warning">Menunggu</span>',
+        'dikonfirmasi': '<span class="badge bg-info">Dikonfirmasi</span>',
+        'checkin': '<span class="badge bg-success">Check-in</span>',
+        'checkout': '<span class="badge bg-secondary">Check-out</span>',
+        'dibatalkan': '<span class="badge bg-danger">Dibatalkan</span>'
+    };
+    return badges[status] || '<span class="badge bg-light">-</span>';
+}
+
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('id-ID').format(amount);
 }
 </script><script>// FontAwesome initialization and class management
 document.addEventListener('DOMContentLoaded', function () { // Ensure FontAwesome classes are present

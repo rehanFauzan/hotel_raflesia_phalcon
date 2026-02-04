@@ -571,43 +571,43 @@ if (phoenixIsRTL) {
 											<span class="me-2 text-body align-bottom" data-feather="lock"></span>Ganti Password</a>
 									</li>
 									<!-- <li class="nav-item">
-																															<a class="nav-link px-3 d-block" href="#!">
-																																<span class="me-2 text-body align-bottom"
-																																	data-feather="settings"></span>Settings &amp; Privacy
-																															</a>
-																														</li>
-																														<li class="nav-item">
-																															<a class="nav-link px-3 d-block" href="#!">
-																																<span class="me-2 text-body align-bottom"
-																																	data-feather="help-circle"></span>Help Center</a>
-																														</li>
-																														<li class="nav-item">
-																															<a class="nav-link px-3 d-block" href="#!">
-																																<span class="me-2 text-body align-bottom"
-																																	data-feather="globe"></span>Language</a>
-																														</li> -->
+																																								<a class="nav-link px-3 d-block" href="#!">
+																																									<span class="me-2 text-body align-bottom"
+																																										data-feather="settings"></span>Settings &amp; Privacy
+																																								</a>
+																																							</li>
+																																							<li class="nav-item">
+																																								<a class="nav-link px-3 d-block" href="#!">
+																																									<span class="me-2 text-body align-bottom"
+																																										data-feather="help-circle"></span>Help Center</a>
+																																							</li>
+																																							<li class="nav-item">
+																																								<a class="nav-link px-3 d-block" href="#!">
+																																									<span class="me-2 text-body align-bottom"
+																																										data-feather="globe"></span>Language</a>
+																																							</li> -->
 								</ul>
 							</div>
 							<div
 								class="card-footer p-0 border-top border-translucent">
 								<!-- <ul class="nav d-flex flex-column my-3">
-																										<li class="nav-item">
-																											<a class="nav-link px-3 d-block" href="#!">
-																												<span class="me-2 text-body align-bottom"
-																													data-feather="user-plus"></span>Add another account</a>
-																										</li>
-																									</ul>
-																									<hr /> -->
+																																		<li class="nav-item">
+																																			<a class="nav-link px-3 d-block" href="#!">
+																																				<span class="me-2 text-body align-bottom"
+																																					data-feather="user-plus"></span>Add another account</a>
+																																		</li>
+																																	</ul>
+																																	<hr /> -->
 								<div class="px-3 my-3">
 									<a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="<?= $this->url->get('') ?><?= $this->session->pdam->direktori.'/auth/logout'?>">
 										<span class="me-2" data-feather="log-out"></span>Sign out</a>
 								</div>
 								<div
 									class="my-2 text-center fw-bold fs-10 text-body-quaternary"><!--
-																														<a class="text-body-quaternary me-1" href="#!">Privacy policy</a>&bull;<a
-																															class="text-body-quaternary mx-1" href="#!">Terms</a>&bull;<a
-																															class="text-body-quaternary ms-1" href="#!">Cookies</a>
-																														-->
+																																								<a class="text-body-quaternary me-1" href="#!">Privacy policy</a>&bull;<a
+																																									class="text-body-quaternary mx-1" href="#!">Terms</a>&bull;<a
+																																									class="text-body-quaternary ms-1" href="#!">Cookies</a>
+																																								-->
 								</div>
 							</div>
 						</div>
@@ -2137,14 +2137,14 @@ if (navbarVerticalStyle === 'darker') {
 	<div
 		class="content">
 		<!--
-													<div class="d-flex flex-center content-min-h">
-														<div class="text-center py-9"><img class="img-fluid mb-7 d-dark-none" src="<?= $this->url->get('assets') ?>/img/spot-illustrations/2.png" width="470" alt=""/>
-															<img class="img-fluid mb-7 d-light-none" src="<?= $this->url->get('assets') ?>/img/spot-illustrations/dark_2.png" width="470" alt=""/>
-															<h1 class="text-body-secondary fw-normal mb-5">Create Something Beautiful.</h1>
-															<a class="btn btn-lg btn-primary" href="../documentation/getting-started.html">Getting Started</a>
-														</div>
-													</div>
-												-->
+															<div class="d-flex flex-center content-min-h">
+																<div class="text-center py-9"><img class="img-fluid mb-7 d-dark-none" src="<?= $this->url->get('assets') ?>/img/spot-illustrations/2.png" width="470" alt=""/>
+																	<img class="img-fluid mb-7 d-light-none" src="<?= $this->url->get('assets') ?>/img/spot-illustrations/dark_2.png" width="470" alt=""/>
+																	<h1 class="text-body-secondary fw-normal mb-5">Create Something Beautiful.</h1>
+																	<a class="btn btn-lg btn-primary" href="../documentation/getting-started.html">Getting Started</a>
+																</div>
+															</div>
+														-->
 		
 	<nav class="mb-3" aria-label="breadcrumb">
 		<ol class="breadcrumb mb-0">
@@ -2437,14 +2437,14 @@ if (navbarVerticalStyle === 'darker') {
 			</label>
 		</div>
 		<!-- 
-									<div class="col-6"><input class="btn-check" id="navbarPositionTopDouble" name="navigation-type" type="radio" value="dual-nav" data-theme-control="phoenixNavbarPosition"/><label class="btn d-inline-block btn-navbar-style fs-9" for="navbarPositionTopDouble">
-											<span class="rounded d-block"><img class="img-fluid img-prototype d-dark-none" src="<?= $this->url->get('assets') ?>/img/generic/dual-light.png" alt=""/><img class="img-fluid img-prototype d-light-none" src="<?= $this->url->get('assets') ?>/img/generic/dual-dark.png" alt=""/></span>
-											<span class="label-text">
-												Dual
-																nav</span>
-										</label>
-									</div>
-									-->
+											<div class="col-6"><input class="btn-check" id="navbarPositionTopDouble" name="navigation-type" type="radio" value="dual-nav" data-theme-control="phoenixNavbarPosition"/><label class="btn d-inline-block btn-navbar-style fs-9" for="navbarPositionTopDouble">
+													<span class="rounded d-block"><img class="img-fluid img-prototype d-dark-none" src="<?= $this->url->get('assets') ?>/img/generic/dual-light.png" alt=""/><img class="img-fluid img-prototype d-light-none" src="<?= $this->url->get('assets') ?>/img/generic/dual-dark.png" alt=""/></span>
+													<span class="label-text">
+														Dual
+																		nav</span>
+												</label>
+											</div>
+											-->
 	</div>
 </div>
 <!-- 
@@ -2551,20 +2551,20 @@ window.baseUrl = "<?= $this->url->get() ?>";
 $.extend(true, $.fn.dataTable.defaults, {
 language: {
 processing: "<span class='fa-stack fa-lg text-center' style='display:flex; justify-content:center; align-items:center; width:100%; margin:auto;'><i class='fa fa-spinner fa-spin fa-stack fa-fw'></i>&emsp;",
-				searchPlaceholder: "Cari...",
-				sSearch: "",
-				lengthMenu: "_MENU_ Data/halaman ",
- lengthMenu: "_MENU_ Data",
+searchPlaceholder: "Cari...",
+sSearch: "",
+lengthMenu: "_MENU_ Data/halaman ",
+lengthMenu: "_MENU_ Data",
 info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
 infoEmpty: "Data tidak ditemukan",
 infoFiltered: "",
 zeroRecords: "Data tidak ditemukan",
 emptyTable: "Data tidak ditemukan",
 paginate: {
-first : "Awal",
-previous : "<i class='fa fa-angle-left'></i>",
-next : "<i class='fa fa-angle-right'></i>",
-last : "Akhir"
+first: "Awal",
+previous: "<i class='fa fa-angle-left'></i>",
+next: "<i class='fa fa-angle-right'></i>",
+last: "Akhir"
 },
 select: {
 rows: "%d Baris Dipilih"

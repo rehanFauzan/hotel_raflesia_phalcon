@@ -12,7 +12,7 @@
 			<title>
 			<?= $this->session->pdam->nama_aplikasi ?>
 			-
-    Laporan - Tamu Harian
+    Master Data - Tamu
 
 		</title>
 
@@ -2149,15 +2149,15 @@ if (navbarVerticalStyle === 'darker') {
 	<nav class="mb-3" aria-label="breadcrumb">
 		<ol class="breadcrumb mb-0">
 			<li class="breadcrumb-item">
-				<a href="#!">Laporan</a>
+				<a href="#!">Master Data</a>
 			</li>
-			<li class="breadcrumb-item active">Tamu Harian</li>
+			<li class="breadcrumb-item active">Tamu</li>
 		</ol>
 	</nav>
 	<div class="mb-9">
 		<div class="row g-2 mb-4">
 			<div class="col-auto">
-				<h2 class="mb-0">Laporan Tamu Harian</h2>
+				<h2 class="mb-0">Tamu</h2>
 			</div>
 		</div>
 		<div id="products">
@@ -2170,9 +2170,19 @@ if (navbarVerticalStyle === 'darker') {
 						<button class="btn btn-sm btn-success my-1" id="btn-perbarui">
 							<span class="fas fa-sync me-2"></span>Perbarui
 						</button>
-						<?php if ($is_can_print == '1') { ?>
-							<button class="btn btn-sm btn-danger my-1" id="btn-print">
-								<span class="fas fa-file-pdf me-2"></span>Export PDF
+						<?php if ($is_can_insert == '1') { ?>
+							<button class="btn btn-sm btn-primary my-1" id="btn-add">
+								<span class="fas fa-plus me-2"></span>Tambah
+							</button>
+						<?php } ?>
+						<?php if ($is_can_update == '1') { ?>
+							<button class="btn btn-sm btn-warning my-1" id="btn-edit">
+								<span class="fas fa-pencil-alt me-2"></span>Edit
+							</button>
+						<?php } ?>
+						<?php if ($is_can_delete == '1') { ?>
+							<button class="btn btn-sm btn-danger my-1" id="btn-delete">
+								<span class="fas fa-trash me-2"></span>Hapus
 							</button>
 						<?php } ?>
 					</div>
@@ -2180,21 +2190,19 @@ if (navbarVerticalStyle === 'darker') {
 			</div>
 			<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
 				<div class="table-responsive scrollbar-overlay mx-n1 px-1">
-					<table class="table table-sm fs-9 mb-0 table-striped table-bordered" id="datatables-tamu-harian">
+					<table class="table table-sm fs-9 mb-0 table-striped table-bordered" id="datatables-tamu">
 						<thead>
 							<tr class="p-2 text-center">
 								<th class="sort px-2" scope="col">#</th>
-								<th class="sort px-2" scope="col">Nama Tamu</th>
+								<th class="sort px-2" scope="col">Nama Lengkap</th>
 								<th class="sort px-2" scope="col">Jenis Identitas</th>
 								<th class="sort px-2" scope="col">No. Identitas</th>
 								<th class="sort px-2" scope="col">Jenis Kelamin</th>
 								<th class="sort px-2" scope="col">No. Telepon</th>
-								<th class="sort px-2" scope="col">No. Kamar</th>
-								<th class="sort px-2" scope="col">Tanggal Check-in</th>
-								<th class="sort px-2" scope="col">Status</th>
+								<th class="sort px-2" scope="col">#</th>
 							</tr>
 						</thead>
-						<tbody class="list" id="tamu-harian-table-body">
+						<tbody class="list" id="tamu-table-body">
 						</tbody>
 					</table>
 				</div>
@@ -2206,7 +2214,7 @@ if (navbarVerticalStyle === 'darker') {
 		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content bg-body-highlight p-6">
 				<div class="modal-header justify-content-between border-0 p-0 mb-2">
-					<h3 class="mb-0">Filter Laporan Tamu Harian</h3>
+					<h3 class="mb-0">Filter Data Tamu</h3>
 					<button class="btn btn-sm btn-phoenix-secondary" data-bs-dismiss="modal" aria-label="Close">
 						<span class="fas fa-times text-danger"></span>
 					</button>
@@ -2216,26 +2224,27 @@ if (navbarVerticalStyle === 'darker') {
 						<div class="col-lg-12">
 							<form id="form-filter">
 								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Tanggal</label>
+									<label class="text-body-highlight fw-bold mb-2">Nama Lengkap</label>
 									<div class="input-group">
 										<div class="input-group-text">
 											<input class="form-check-input toggle-input" type="checkbox"/>
 										</div>
-										<input class="form-control" type="date" id="search_tanggal" name="search_tanggal"/>
+										<input class="form-control" type="text" id="search_nama" name="search_nama" placeholder="Cari berdasarkan nama..."/>
 									</div>
 								</div>
 
 								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Status</label>
+									<label class="text-body-highlight fw-bold mb-2">Jenis Identitas</label>
 									<div class="input-group">
 										<div class="input-group-text">
 											<input class="form-check-input toggle-input" type="checkbox"/>
 										</div>
 										<div class="form-control">
-											<select name="search_status" id="search_status" class="form-control">
-												<option value="">Pilih Status</option>
-												<option value="checkin">Check-in</option>
-												<option value="checkout">Check-out</option>
+											<select name="search_jenis_identitas" id="search_jenis_identitas" class="form-control">
+												<option value="">Pilih Jenis Identitas</option>
+												<option value="ktp">KTP</option>
+												<option value="sim">SIM</option>
+												<option value="passport">Passport</option>
 											</select>
 										</div>
 									</div>
@@ -2265,6 +2274,130 @@ if (navbarVerticalStyle === 'darker') {
 						Batal
 					</button>
 					<button class="btn btn-primary my-0" id="btn-search">Cari Data</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="manageModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addModal" aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
+			<div class="modal-content bg-body-highlight p-6">
+				<div class="modal-header justify-content-between border-0 p-0 mb-2">
+					<h3 class="mb-0" id="title_modal"></h3>
+					<button class="btn btn-sm btn-phoenix-secondary" data-bs-dismiss="modal" aria-label="Close">
+						<span class="fas fa-times text-danger"></span>
+					</button>
+				</div>
+				<div class="modal-body px-0">
+					<div class="row g-4">
+						<div class="col-lg-12">
+							<form id="manageForm">
+								<input type="hidden" id="input-action" name="input_action" value="store"/>
+								<input type="hidden" id="id_edit" name="id_edit"/>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">Nama Lengkap</label>
+											<input class="form-control" type="text" id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan Nama Lengkap ..."/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">Jenis Identitas</label>
+											<select class="form-control" id="jenis_identitas" name="jenis_identitas">
+												<option value="">Pilih Jenis Identitas</option>
+												<option value="ktp">KTP</option>
+												<option value="sim">SIM</option>
+												<option value="passport">Passport</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">No. Identitas</label>
+											<input class="form-control" type="text" id="no_identitas" name="no_identitas" placeholder="Masukkan No. Identitas ..."/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">Jenis Kelamin</label>
+											<select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+												<option value="">Pilih Jenis Kelamin</option>
+												<option value="L">Laki-laki</option>
+												<option value="P">Perempuan</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">Tanggal Lahir</label>
+											<input class="form-control" type="date" id="tanggal_lahir" name="tanggal_lahir"/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">No. Telepon</label>
+											<input class="form-control" type="text" id="no_telepon" name="no_telepon" placeholder="Masukkan No. Telepon ..."/>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">Email</label>
+											<input class="form-control" type="email" id="email" name="email" placeholder="Masukkan Email ..."/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">Kebangsaan</label>
+											<input class="form-control" type="text" id="kebangsaan" name="kebangsaan" value="Indonesia" placeholder="Masukkan Kebangsaan ..."/>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">Pekerjaan</label>
+											<input class="form-control" type="text" id="pekerjaan" name="pekerjaan" placeholder="Masukkan Pekerjaan ..."/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="mb-2">
+											<label class="text-body-highlight fw-bold mb-2">Kota</label>
+											<input class="form-control" type="text" id="kota" name="kota" placeholder="Masukkan Kota ..."/>
+										</div>
+									</div>
+								</div>
+
+								<div class="mb-2">
+									<label class="text-body-highlight fw-bold mb-2">Alamat</label>
+									<textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Masukkan Alamat ..."></textarea>
+								</div>
+
+								<div class="mb-2">
+									<label class="text-body-highlight fw-bold mb-2">Catatan</label>
+									<textarea class="form-control" id="catatan" name="catatan" rows="2" placeholder="Masukkan Catatan ..."></textarea>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer border-0 pt-6 px-0 pb-0">
+					<button class="btn btn-lighter-grey px-3 my-0" data-bs-dismiss="modal" aria-label="Close">
+						Batal
+					</button>
+					<button class="btn btn-primary my-0" id="btn-submit">Simpan</button>
 				</div>
 			</div>
 		</div>
@@ -2525,192 +2658,457 @@ $(e.currentTarget).data('datepicker').hide(); // Sembunyikan setelah pilih bulan
 function escapeHtml(str) {
 return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }</script><script>
-	window.defaultUrl = `${baseUrl}panel/hotel/laporan/tamu-harian/`;
+	window.defaultUrl = `${baseUrl}panel/hotel/master/tamu/`;
 var table;
+let rowData;
 
-$(document).ready(function() {
-    // Initialize Select2 for filter dropdowns
-    $('#search_status').select2({
-        dropdownParent: $('#filterModal'),
-        width: '100%'
-    });
+var manageModal = $('#manageModal');
+var formManage = $('#manageForm');
 
-    $('#search_jenis_kelamin').select2({
-        dropdownParent: $('#filterModal'),
-        width: '100%'
-    });
+$(document).ready(function () {
 
-    // Toggle input functionality for filter
-    $('.toggle-input').change(function() {
-        let inputGroup = $(this).closest('.input-group');
-        let input = inputGroup.find('input[type="date"], select');
-        
-        if ($(this).is(':checked')) {
-            input.prop('disabled', false);
-        } else {
-            input.prop('disabled', true).val('');
-        }
-    });
+	formManage.validate({
+		rules: {
+			nama_lengkap: {
+				required: true
+			},
+			jenis_identitas: {
+				required: true
+			},
+			no_identitas: {
+				required: true
+			},
+			jenis_kelamin: {
+				required: true
+			},
+			no_telepon: {
+				required: true
+			}
+		},
+		errorClass: "text-danger",
+		errorElement: "div",
+		highlight: function (element, errorClass) {
+			$(element).addClass("is-invalid");
+		},
+		unhighlight: function (element, errorClass) {
+			$(element).removeClass("is-invalid");
+		},
+		errorPlacement: function(error, element) {
+			error.addClass('fs-9');
+			error.insertAfter(element);
+		}
+	});
 
-    // Initialize all filter inputs as disabled
-    $('#form-filter input[type="date"], #form-filter select').prop('disabled', true);
+	// Initialize Select2 for filter dropdowns
+	$('#search_jenis_identitas').select2({
+		dropdownParent: $('#filterModal'),
+		width: '100%'
+	});
 
-    // Filter button
-    $('#btn-filter').click(function(e) {
-        e.preventDefault();
-        $('#filterModal').modal('show');
-    });
+	$('#search_jenis_kelamin').select2({
+		dropdownParent: $('#filterModal'),
+		width: '100%'
+	});
 
-    // Search button
-    $('#btn-search').click(function(e) {
-        e.preventDefault();
-        table.ajax.reload();
-        $('#filterModal').modal('hide');
-        notyf.success('Filter diterapkan');
-    });
+	// Toggle input functionality for filter
+	$('.toggle-input').change(function() {
+		let inputGroup = $(this).closest('.input-group');
+		let input = inputGroup.find('input[type="text"], select');
+		
+		if ($(this).is(':checked')) {
+			input.prop('disabled', false);
+		} else {
+			input.prop('disabled', true).val('');
+		}
+	});
 
-    $('#btn-perbarui').click(function(e) {
-        e.preventDefault();
-        table.ajax.reload();
-    });
+	// Initialize all filter inputs as disabled
+	$('#form-filter input[type="text"], #form-filter select').prop('disabled', true);
 
-    $('#btn-print').click(function(e) {
-        e.preventDefault();
-        
-        // Get current filter values
-        var formData = $('#form-filter').serialize();
-        var pdfUrl = defaultUrl + 'pdf';
-        
-        if (formData) {
-            pdfUrl += '?' + formData;
-        }
-        
-        // Open PDF in new window
-        window.open(pdfUrl, '_blank');
-        notyf.success('PDF sedang diunduh...');
-    });
+	// Filter button
+	$('#btn-filter').click(function(e) {
+		e.preventDefault();
+		$('#filterModal').modal('show');
+	});
 
-    renderViewDatatableAction();
+	// Search button
+	$('#btn-search').click(function(e) {
+		e.preventDefault();
+		table.ajax.reload();
+		$('#filterModal').modal('hide');
+		notyf.success('Filter diterapkan');
+	});
+
+	// Initialize Select2 for form dropdowns
+	$('#jenis_identitas').select2({
+		dropdownParent: $('#manageModal'),
+		width: '100%',
+		placeholder: 'Pilih Jenis Identitas'
+	});
+
+	$('#jenis_kelamin').select2({
+		dropdownParent: $('#manageModal'),
+		width: '100%',
+		placeholder: 'Pilih Jenis Kelamin'
+	});
+
+	// Set Default To Disable
+	$('#btn-edit').addClass('disabled');
+	$('#btn-delete').addClass('disabled');
+
+	$('#btn-perbarui').click(function (e) {
+		e.preventDefault();
+		window.location.href = defaultUrl;
+	});
+
+	$('#btn-add').click(function (e) {
+		e.preventDefault();
+
+		// Reset form fields
+		formManage.trigger("reset");
+
+		// Clear validation errors
+		formManage.find('.is-invalid').removeClass('is-invalid');
+		formManage.find('.text-danger').remove();
+
+		// Clear any hidden fields that might contain previous data
+		$('#id_edit').val('');
+		manageModal.find("#title_modal").text("Tambah Data Tamu")
+		formManage.find('#input-action').val('store');
+		$('#kebangsaan').val('Indonesia');
+
+		$("#manageModal").modal("show");
+	});
+
+	$("#btn-delete").click(function (e) {
+		if (!rowData || !rowData.id) {
+			notyf.open({
+				type: "warning",
+				message: "Pilih data yang ingin dihapus terlebih dahulu!",
+			});
+			return false;
+		}
+
+		$.confirm({
+			title: "Konfirmasi",
+			theme: "modern",
+			content: "Anda yakin ingin menghapus data?",
+			buttons: {
+				Tidak: {
+					text: "Tidak",
+					btnClass: "btn-warning",
+				},
+				Ya: {
+					text: "Ya",
+					btnClass: "btn-primary",
+					action: function () {
+						$.ajax({
+							type: "POST",
+							data: {
+								id_delete: rowData.id
+							},
+							url: defaultUrl + "deleteData",
+							beforeSend: function (xhr, settings) {
+								$(".loading").removeClass("hide");
+							},
+							success: function (response) {
+								$(".loading").addClass("hide");
+								if (response.error == 0) {
+									notyf.success("Data Berhasil dihapus");
+									window.location.href = defaultUrl;
+								} else {
+									notyf.error("Data Gagal dihapus");
+								}
+							},
+							error: function (e) {
+								notyf.error("Error, Terjadi Kesalahan");
+								$(".loading").addClass("hide");
+							},
+						});
+					},
+				},
+			},
+		});
+	});
+
+	$('#btn-edit').click(function (e) {
+		e.preventDefault();
+
+		if (!rowData || !rowData.id) {
+			notyf.open({
+				type: "warning",
+				message: "Pilih data yang ingin dirubah terlebih dahulu!",
+			});
+			return false;
+		}
+
+		formManage.trigger("reset");
+
+		// Clear validation errors
+		formManage.find('.is-invalid').removeClass('is-invalid');
+		formManage.find('.text-danger').remove();
+
+		// Clear any hidden fields that might contain previous data
+		$('#id_edit').val('');
+
+		manageModal.find("#title_modal").text("Ubah Data Tamu")
+		formManage.find('#input-action').val('update');
+		formManage.find('#id_edit').val(rowData.id);
+		
+		formManage.find('#nama_lengkap').val(rowData.nama_lengkap);
+		formManage.find('#jenis_identitas').val(rowData.jenis_identitas);
+		formManage.find('#no_identitas').val(rowData.no_identitas);
+		formManage.find('#jenis_kelamin').val(rowData.jenis_kelamin);
+		formManage.find('#tanggal_lahir').val(rowData.tanggal_lahir);
+		formManage.find('#no_telepon').val(rowData.no_telepon);
+		formManage.find('#email').val(rowData.email);
+		formManage.find('#kebangsaan').val(rowData.kebangsaan);
+		formManage.find('#pekerjaan').val(rowData.pekerjaan);
+		formManage.find('#kota').val(rowData.kota);
+		formManage.find('#alamat').val(rowData.alamat);
+		formManage.find('#catatan').val(rowData.catatan);
+
+		$("#manageModal").modal("show");
+	});
+
+	$('#btn-submit').click(function (e) {
+		e.preventDefault();
+
+		let valAction = formManage.find('#input-action').val();
+		if (_.isEmpty(valAction)) {
+			notyf.error("Terjadi kesalahan silahkan refresh ulang");
+			return false;
+		}
+
+		let urlAction = "";
+		if (valAction == "store") {
+			urlAction = "menyimpan data";
+		} else {
+			urlAction = "mengubah data";
+		}
+
+		if (formManage.valid()) {
+			$.confirm({
+				title: "Konfirmasi",
+				theme: "modern",
+				content: "Anda yakin ingin " + urlAction + " yang telah diinput?",
+				buttons: {
+					Tidak: {
+						text: "Tidak",
+						btnClass: "btn-warning",
+					},
+					Ya: {
+						text: "Ya",
+						btnClass: "btn-primary",
+						action: function () {
+							ajaxSubmit();
+						}
+					}
+				}
+			});
+		}
+	});
+
+	renderViewDatatableAction();
+
 });
 
+function refreshData() {
+	try {
+		table.ajax.reload();
+		console.log("Datatable successfully refreshed");
+	} catch (err) {
+		alert("Error refreshing table");
+		console.error("Error refreshing table");
+	}
+}
+
+function ajaxSubmit() {
+	let valAction = formManage.find('#input-action').val();
+	if (_.isEmpty(valAction)) {
+		notyf.error("Tidak diketahui aksi");
+		return false;
+	}
+
+	let urlAction = "";
+	if (valAction == "store") {
+		urlAction = "saveData";
+	} else {
+		urlAction = "updateData";
+	}
+
+	$.ajax({
+		type: "POST",
+		data: formManage.serialize(),
+		url: defaultUrl + urlAction,
+		beforeSend: function (xhr, settings) {
+			$(".loading").removeClass("hide");
+		},
+		success: function (response) {
+			$(".loading").addClass("hide");
+			if (response.error == 0) {
+				notyf.success(response.message);
+				location.href = defaultUrl;
+			} else {
+				notyf.error(response.message);
+			}
+		},
+		error: function (e) {
+			notyf.error("Error: " + e);
+			$(".loading").addClass("hide");
+		},
+	});
+}
+
 function renderViewDatatableAction() {
-    table = $("#datatables-tamu-harian").DataTable({
-        ajax: {
-            url: defaultUrl + "datatable",
-            type: "post",
-            data: function(d) {
-                var formData = $("#form-filter").serializeArray();
-                $.each(formData, function(key, val) {
-                    d[val.name] = val.value;
-                });
-            },
-        },
-        serverSide: true,
-        processing: true,
-        responsive: true,
-        aaSorting: [],
-        columnDefs: [{
-            searchable: false,
-            targets: [0],
-        }],
-        columns: [
-            {
-                data: "id",
-                orderable: false,
-                render: function(data, index, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1 + ".";
-                },
-            },
-            {
-                data: "nama_lengkap",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "jenis_identitas",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data.toUpperCase();
-                }
-            },
-            {
-                data: "no_identitas",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "jenis_kelamin",
-                render: function(data, type, row, meta) {
-                    if (_.isEmpty(data)) return `-`;
-                    return data === 'L' ? 'Laki-laki' : 'Perempuan';
-                }
-            },
-            {
-                data: "no_telepon",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "nomor_kamar",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "tanggal_checkin",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : new Date(data).toLocaleDateString('id-ID');
-                }
-            },
-            {
-                data: "status",
-                render: function(data, type, row, meta) {
-                    if (_.isEmpty(data)) return `-`;
-                    
-                    let badgeClass = '';
-                    let statusText = '';
-                    
-                    switch(data) {
-                        case 'checkin':
-                            badgeClass = 'bg-success';
-                            statusText = 'Check-in';
-                            break;
-                        case 'checkout':
-                            badgeClass = 'bg-secondary';
-                            statusText = 'Check-out';
-                            break;
-                        default:
-                            badgeClass = 'bg-light';
-                            statusText = data.charAt(0).toUpperCase() + data.slice(1);
-                    }
-                    return `<span class="badge ${badgeClass}">${statusText}</span>`;
-                }
-            }
-        ],
-        createdRow: function(row, data, index) {
-            $("thead").css({
-                "vertical-align": "middle",
-                "text-align": "center",
-            });
-            $("td", row).css({
-                "vertical-align": "middle"
-            });
-            $("td", row).first().css({
-                width: "3%",
-                "text-align": "center",
-            });
-            $('td', row).eq(1).css({ 'text-align': 'left' });
-            $('td', row).eq(2).css({ 'text-align': 'center' });
-            $('td', row).eq(3).css({ 'text-align': 'center' });
-            $('td', row).eq(4).css({ 'text-align': 'center' });
-            $('td', row).eq(5).css({ 'text-align': 'center' });
-            $('td', row).eq(6).css({ 'text-align': 'center' });
-            $('td', row).eq(7).css({ 'text-align': 'center' });
-            $('td', row).eq(8).css({ 'text-align': 'center' });
-        },
-    });
+	table = $("#datatables-tamu").DataTable({
+		ajax: {
+			url: defaultUrl + "datatable",
+			type: "post",
+			data: function (d) {
+				var formData = $("#form-filter").serializeArray();
+				$.each(formData, function(key, val) {
+					d[val.name] = val.value;
+				});
+			},
+		},
+		serverSide: true,
+		processing: true,
+		responsive: true,
+		selected: true,
+		aaSorting: [],
+		columnDefs: [{
+			searchable: false,
+			targets: [0],
+		}],
+		columns: [{
+				data: "id",
+				orderable: false,
+				render: function (data, index, row, meta) {
+					return meta.row + meta.settings._iDisplayStart + 1 + ".";
+				},
+			},
+			{
+				data: "nama_lengkap",
+				render: function (data, index, row, meta) {
+					if (_.isEmpty(data)) {
+						return `-`;
+					} else {
+						return `${data}`;
+					}
+				},
+			},
+			{
+				data: "jenis_identitas",
+				render: function (data, index, row, meta) {
+					if (_.isEmpty(data)) {
+						return `-`;
+					} else {
+						return `${data}`;
+					}
+				},
+			},
+			{
+				data: "no_identitas",
+				render: function (data, index, row, meta) {
+					if (_.isEmpty(data)) {
+						return `-`;
+					} else {
+						return `${data}`;
+					}
+				},
+			},
+			{
+				data: "jenis_kelamin",
+				render: function (data, index, row, meta) {
+					if (_.isEmpty(data)) {
+						return `-`;
+					} else {
+						return data === 'L' ? 'Laki-laki' : 'Perempuan';
+					}
+				},
+			},
+			{
+				data: "no_telepon",
+				render: function (data, index, row, meta) {
+					if (_.isEmpty(data)) {
+						return `-`;
+					} else {
+						return `${data}`;
+					}
+				},
+			},
+			{
+				data: "created_at",
+				render: function (data, type, row, meta) {
+					if (_.isEmpty(data)) {
+						return `-`;
+					} else {
+						if (!_.isEmpty(row.updated_at)) {
+							return `
+								<span class="mr-3" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Updated By : ${row.name_create}">
+									<i class="fas fa-user"></i>
+								</span>
+								<span data-bs-toggle="tooltip" data-bs-placement="bottom" title="Updated At : ${row.updated_at}">
+									<i class="fas fa-clock"></i>
+								</span>
+							`;
+						} else {
+							return `
+								<span class="mr-3" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Created By : ${row.name_create}">
+									<i class="fas fa-user"></i>
+								</span>
+								<span data-bs-toggle="tooltip" data-bs-placement="bottom" title="Created At : ${row.created_at}">
+									<i class="fas fa-clock"></i>
+								</span>
+							`
+						}
+					}
+				}
+			}
+		],
+		createdRow: function (row, data, index) {
+			$(row).attr("data-value", encodeURIComponent(JSON.stringify(data)));
+			$("thead").css({
+				"vertical-align": "middle",
+				"text-align": "center",
+			});
+			$("td", row).css({
+				"vertical-align": "middle",
+				'cursor': 'pointer'
+			});
+			$("td", row).first().css({
+				width: "3%",
+				"text-align": "center",
+			});
+
+			$("td", row).eq(6).css({
+				"text-align": "center"
+			});
+		},
+	}).on("click", "tr", function () {
+		// Remove selected class from all rows first
+		$(this).siblings().removeClass("selected");
+
+		// Toggle selected class on the clicked row
+		if ($(this).hasClass("selected")) {
+			$(this).removeClass("selected");
+			// Disable buttons when no row is selected
+			$("#btn-edit").addClass("disabled");
+			$("#btn-delete").addClass("disabled");
+		} else {
+			$(this).addClass("selected");
+			// Enable buttons when a row is selected
+			$("#btn-edit").removeClass("disabled");
+			$("#btn-delete").removeClass("disabled");
+
+			// Store the selected row data
+			let selectedData = table.row(this).data();
+			if (selectedData) {
+				rowData = selectedData;
+			}
+		}
+	});
 }
 </script><script>// FontAwesome initialization and class management
 document.addEventListener('DOMContentLoaded', function () { // Ensure FontAwesome classes are present

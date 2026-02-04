@@ -12,7 +12,7 @@
 			<title>
 			<?= $this->session->pdam->nama_aplikasi ?>
 			-
-    Laporan - Tamu Harian
+    Master - Harga Kamar
 
 		</title>
 
@@ -2149,15 +2149,15 @@ if (navbarVerticalStyle === 'darker') {
 	<nav class="mb-3" aria-label="breadcrumb">
 		<ol class="breadcrumb mb-0">
 			<li class="breadcrumb-item">
-				<a href="#!">Laporan</a>
+				<a href="#!">Master</a>
 			</li>
-			<li class="breadcrumb-item active">Tamu Harian</li>
+			<li class="breadcrumb-item active">Harga Kamar</li>
 		</ol>
 	</nav>
 	<div class="mb-9">
 		<div class="row g-2 mb-4">
 			<div class="col-auto">
-				<h2 class="mb-0">Laporan Tamu Harian</h2>
+				<h2 class="mb-0">Harga Kamar</h2>
 			</div>
 		</div>
 		<div id="products">
@@ -2170,9 +2170,9 @@ if (navbarVerticalStyle === 'darker') {
 						<button class="btn btn-sm btn-success my-1" id="btn-perbarui">
 							<span class="fas fa-sync me-2"></span>Perbarui
 						</button>
-						<?php if ($is_can_print == '1') { ?>
-							<button class="btn btn-sm btn-danger my-1" id="btn-print">
-								<span class="fas fa-file-pdf me-2"></span>Export PDF
+						<?php if ($is_can_update == '1') { ?>
+							<button class="btn btn-sm btn-warning my-1" id="btn-edit">
+								<span class="fas fa-pencil-alt me-2"></span>Edit Harga
 							</button>
 						<?php } ?>
 					</div>
@@ -2180,21 +2180,16 @@ if (navbarVerticalStyle === 'darker') {
 			</div>
 			<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
 				<div class="table-responsive scrollbar-overlay mx-n1 px-1">
-					<table class="table table-sm fs-9 mb-0 table-striped table-bordered" id="datatables-tamu-harian">
+					<table class="table table-sm fs-9 mb-0 table-striped table-bordered" id="datatables-harga-kamar">
 						<thead>
 							<tr class="p-2 text-center">
-								<th class="sort px-2" scope="col">#</th>
-								<th class="sort px-2" scope="col">Nama Tamu</th>
-								<th class="sort px-2" scope="col">Jenis Identitas</th>
-								<th class="sort px-2" scope="col">No. Identitas</th>
-								<th class="sort px-2" scope="col">Jenis Kelamin</th>
-								<th class="sort px-2" scope="col">No. Telepon</th>
-								<th class="sort px-2" scope="col">No. Kamar</th>
-								<th class="sort px-2" scope="col">Tanggal Check-in</th>
-								<th class="sort px-2" scope="col">Status</th>
+								<th class="sort px-2" scope="col">No</th>
+								<th class="sort px-2" scope="col">ID</th>
+								<th class="sort px-2" scope="col">Nama Tipe</th>
+								<th class="sort px-2" scope="col">Harga per Malam</th>
 							</tr>
 						</thead>
-						<tbody class="list" id="tamu-harian-table-body">
+						<tbody class="list" id="harga-kamar-table-body">
 						</tbody>
 					</table>
 				</div>
@@ -2206,7 +2201,7 @@ if (navbarVerticalStyle === 'darker') {
 		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content bg-body-highlight p-6">
 				<div class="modal-header justify-content-between border-0 p-0 mb-2">
-					<h3 class="mb-0">Filter Laporan Tamu Harian</h3>
+					<h3 class="mb-0">Filter Data Harga Kamar</h3>
 					<button class="btn btn-sm btn-phoenix-secondary" data-bs-dismiss="modal" aria-label="Close">
 						<span class="fas fa-times text-danger"></span>
 					</button>
@@ -2216,43 +2211,40 @@ if (navbarVerticalStyle === 'darker') {
 						<div class="col-lg-12">
 							<form id="form-filter">
 								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Tanggal</label>
-									<div class="input-group">
-										<div class="input-group-text">
-											<input class="form-check-input toggle-input" type="checkbox"/>
-										</div>
-										<input class="form-control" type="date" id="search_tanggal" name="search_tanggal"/>
-									</div>
-								</div>
-
-								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Status</label>
+									<label class="text-body-highlight fw-bold mb-2">Nama Tipe Kamar</label>
 									<div class="input-group">
 										<div class="input-group-text">
 											<input class="form-check-input toggle-input" type="checkbox"/>
 										</div>
 										<div class="form-control">
-											<select name="search_status" id="search_status" class="form-control">
-												<option value="">Pilih Status</option>
-												<option value="checkin">Check-in</option>
-												<option value="checkout">Check-out</option>
+											<select name="search_nama" id="search_nama" class="form-control">
+												<option value="">Pilih Tipe Kamar</option>
 											</select>
 										</div>
 									</div>
 								</div>
 
-								<div class="mb-3">
-									<label class="text-body-highlight fw-bold mb-2">Jenis Kelamin</label>
-									<div class="input-group">
-										<div class="input-group-text">
-											<input class="form-check-input toggle-input" type="checkbox"/>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="mb-3">
+											<label class="text-body-highlight fw-bold mb-2">Harga Minimum</label>
+											<div class="input-group">
+												<div class="input-group-text">
+													<input class="form-check-input toggle-input" type="checkbox"/>
+												</div>
+												<input class="form-control" type="number" id="search_harga_min" name="search_harga_min" placeholder="Harga minimum..."/>
+											</div>
 										</div>
-										<div class="form-control">
-											<select name="search_jenis_kelamin" id="search_jenis_kelamin" class="form-control">
-												<option value="">Pilih Jenis Kelamin</option>
-												<option value="L">Laki-laki</option>
-												<option value="P">Perempuan</option>
-											</select>
+									</div>
+									<div class="col-md-6">
+										<div class="mb-3">
+											<label class="text-body-highlight fw-bold mb-2">Harga Maksimum</label>
+											<div class="input-group">
+												<div class="input-group-text">
+													<input class="form-check-input toggle-input" type="checkbox"/>
+												</div>
+												<input class="form-control" type="number" id="search_harga_max" name="search_harga_max" placeholder="Harga maksimum..."/>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -2270,7 +2262,49 @@ if (navbarVerticalStyle === 'darker') {
 		</div>
 	</div>
 
-	<?= $this->flash->output() ?>
+	<div class="modal fade" id="manageModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addModal" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content bg-body-highlight p-6">
+				<div class="modal-header justify-content-between border-0 p-0 mb-2">
+					<h3 class="mb-0" id="title_modal">Edit Harga Kamar</h3>
+					<button class="btn btn-sm btn-phoenix-secondary" data-bs-dismiss="modal" aria-label="Close">
+						<span class="fas fa-times text-danger"></span>
+					</button>
+				</div>
+				<div class="modal-body px-0">
+					<div class="row g-4">
+						<div class="col-lg-12">
+							<form id="manageForm">
+								<input type="hidden" id="id_edit" name="id_edit"/>
+
+								<div class="mb-2">
+									<label class="text-body-highlight fw-bold mb-2">ID Tipe Kamar</label>
+									<input class="form-control" type="text" id="id_display" readonly/>
+								</div>
+
+								<div class="mb-2">
+									<label class="text-body-highlight fw-bold mb-2">Nama Tipe Kamar</label>
+									<input class="form-control" type="text" id="nama_display" readonly/>
+								</div>
+
+								<div class="mb-2">
+									<label class="text-body-highlight fw-bold mb-2">Harga per Malam</label>
+									<input class="form-control" type="number" id="harga_per_malam" name="harga_per_malam" placeholder="Masukkan Harga ..."/>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer border-0 pt-6 px-0 pb-0">
+					<button class="btn btn-lighter-grey px-3 my-0" data-bs-dismiss="modal" aria-label="Close">
+						Batal
+					</button>
+					<button class="btn btn-primary my-0" id="btn-submit">Simpan</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -2525,25 +2559,82 @@ $(e.currentTarget).data('datepicker').hide(); // Sembunyikan setelah pilih bulan
 function escapeHtml(str) {
 return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }</script><script>
-	window.defaultUrl = `${baseUrl}panel/hotel/laporan/tamu-harian/`;
-var table;
+	$(document).ready(function() {
+    let table;
+    let selectedRowId = null;
 
-$(document).ready(function() {
-    // Initialize Select2 for filter dropdowns
-    $('#search_status').select2({
-        dropdownParent: $('#filterModal'),
-        width: '100%'
+    // Initialize DataTable
+    table = $('#datatables-harga-kamar').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/panel/hotel/master/harga-kamar/datatable',
+            type: 'POST',
+            data: function(d) {
+                var formData = $("#form-filter").serializeArray();
+                $.each(formData, function(key, val) {
+                    d[val.name] = val.value;
+                });
+            }
+        },
+        columns: [
+            { 
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                },
+                orderable: false,
+                searchable: false
+            },
+            { data: 'id', name: 'id' },
+            { data: 'nama', name: 'nama' },
+            { 
+                data: 'harga_per_malam', 
+                name: 'harga_per_malam',
+                render: function(data) {
+                    return 'Rp ' + new Intl.NumberFormat('id-ID').format(data);
+                }
+            }
+        ],
+        order: [[1, 'asc']],
+        select: {
+            style: 'single'
+        }
     });
 
-    $('#search_jenis_kelamin').select2({
+    // Initialize Select2 for filter
+    $('#search_nama').select2({
         dropdownParent: $('#filterModal'),
-        width: '100%'
+        width: '100%',
+        ajax: {
+            url: '/panel/hotel/master/tipe-kamar/getTipeKamarOptions',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.map(function(item) {
+                        return {
+                            id: item.id,
+                            text: item.nama
+                        };
+                    })
+                };
+            },
+            cache: true
+        },
+        placeholder: 'Pilih Tipe Kamar',
+        allowClear: true
     });
 
     // Toggle input functionality for filter
     $('.toggle-input').change(function() {
         let inputGroup = $(this).closest('.input-group');
-        let input = inputGroup.find('input[type="date"], select');
+        let input = inputGroup.find('input[type="text"], input[type="number"], select');
         
         if ($(this).is(':checked')) {
             input.prop('disabled', false);
@@ -2553,7 +2644,7 @@ $(document).ready(function() {
     });
 
     // Initialize all filter inputs as disabled
-    $('#form-filter input[type="date"], #form-filter select').prop('disabled', true);
+    $('#form-filter input[type="text"], #form-filter input[type="number"], #form-filter select').prop('disabled', true);
 
     // Filter button
     $('#btn-filter').click(function(e) {
@@ -2569,149 +2660,66 @@ $(document).ready(function() {
         notyf.success('Filter diterapkan');
     });
 
-    $('#btn-perbarui').click(function(e) {
-        e.preventDefault();
+    // Row selection
+    $('#datatables-harga-kamar tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+            selectedRowId = null;
+        } else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            selectedRowId = table.row(this).data().id;
+        }
+    });
+
+    // Refresh button
+    $('#btn-perbarui').click(function() {
         table.ajax.reload();
     });
 
-    $('#btn-print').click(function(e) {
-        e.preventDefault();
-        
-        // Get current filter values
-        var formData = $('#form-filter').serialize();
-        var pdfUrl = defaultUrl + 'pdf';
-        
-        if (formData) {
-            pdfUrl += '?' + formData;
+    // Edit button
+    $('#btn-edit').click(function() {
+        if (!selectedRowId) {
+            alert('Pilih data yang akan diedit');
+            return;
         }
         
-        // Open PDF in new window
-        window.open(pdfUrl, '_blank');
-        notyf.success('PDF sedang diunduh...');
+        let rowData = table.row('.selected').data();
+        
+        $('#id_edit').val(rowData.id);
+        $('#id_display').val(rowData.id);
+        $('#nama_display').val(rowData.nama);
+        $('#harga_per_malam').val(rowData.harga_per_malam);
+        
+        $('#manageModal').modal('show');
     });
 
-    renderViewDatatableAction();
-});
-
-function renderViewDatatableAction() {
-    table = $("#datatables-tamu-harian").DataTable({
-        ajax: {
-            url: defaultUrl + "datatable",
-            type: "post",
-            data: function(d) {
-                var formData = $("#form-filter").serializeArray();
-                $.each(formData, function(key, val) {
-                    d[val.name] = val.value;
-                });
-            },
-        },
-        serverSide: true,
-        processing: true,
-        responsive: true,
-        aaSorting: [],
-        columnDefs: [{
-            searchable: false,
-            targets: [0],
-        }],
-        columns: [
-            {
-                data: "id",
-                orderable: false,
-                render: function(data, index, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1 + ".";
-                },
-            },
-            {
-                data: "nama_lengkap",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
+    // Form submit
+    $('#btn-submit').click(function(e) {
+        e.preventDefault();
+        
+        let formData = $('#manageForm').serialize();
+        
+        $.ajax({
+            url: '/panel/hotel/master/harga-kamar/updateData',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.error === 0) {
+                    alert('Harga berhasil diupdate');
+                    $('#manageModal').modal('hide');
+                    table.ajax.reload();
+                    selectedRowId = null;
+                } else {
+                    alert('Error: ' + response.message);
                 }
             },
-            {
-                data: "jenis_identitas",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data.toUpperCase();
-                }
-            },
-            {
-                data: "no_identitas",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "jenis_kelamin",
-                render: function(data, type, row, meta) {
-                    if (_.isEmpty(data)) return `-`;
-                    return data === 'L' ? 'Laki-laki' : 'Perempuan';
-                }
-            },
-            {
-                data: "no_telepon",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "nomor_kamar",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : data;
-                }
-            },
-            {
-                data: "tanggal_checkin",
-                render: function(data, type, row, meta) {
-                    return _.isEmpty(data) ? `-` : new Date(data).toLocaleDateString('id-ID');
-                }
-            },
-            {
-                data: "status",
-                render: function(data, type, row, meta) {
-                    if (_.isEmpty(data)) return `-`;
-                    
-                    let badgeClass = '';
-                    let statusText = '';
-                    
-                    switch(data) {
-                        case 'checkin':
-                            badgeClass = 'bg-success';
-                            statusText = 'Check-in';
-                            break;
-                        case 'checkout':
-                            badgeClass = 'bg-secondary';
-                            statusText = 'Check-out';
-                            break;
-                        default:
-                            badgeClass = 'bg-light';
-                            statusText = data.charAt(0).toUpperCase() + data.slice(1);
-                    }
-                    return `<span class="badge ${badgeClass}">${statusText}</span>`;
-                }
+            error: function() {
+                alert('Terjadi kesalahan sistem');
             }
-        ],
-        createdRow: function(row, data, index) {
-            $("thead").css({
-                "vertical-align": "middle",
-                "text-align": "center",
-            });
-            $("td", row).css({
-                "vertical-align": "middle"
-            });
-            $("td", row).first().css({
-                width: "3%",
-                "text-align": "center",
-            });
-            $('td', row).eq(1).css({ 'text-align': 'left' });
-            $('td', row).eq(2).css({ 'text-align': 'center' });
-            $('td', row).eq(3).css({ 'text-align': 'center' });
-            $('td', row).eq(4).css({ 'text-align': 'center' });
-            $('td', row).eq(5).css({ 'text-align': 'center' });
-            $('td', row).eq(6).css({ 'text-align': 'center' });
-            $('td', row).eq(7).css({ 'text-align': 'center' });
-            $('td', row).eq(8).css({ 'text-align': 'center' });
-        },
+        });
     });
-}
+});
 </script><script>// FontAwesome initialization and class management
 document.addEventListener('DOMContentLoaded', function () { // Ensure FontAwesome classes are present
 function ensureFontAwesomeClasses() {
