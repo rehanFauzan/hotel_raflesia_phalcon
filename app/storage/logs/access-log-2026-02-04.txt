@@ -355,3 +355,30 @@ After     : {
 }
 Response  : true
 --------------------------------------------------------------------------------
+[2026-02-04 14:49:00] usertes (::1) - Melakukan perubahan data pada modul atau class App\Modules\Defaults\Setting\User\UserModel
+URL       : localhost/setting/ganti-password/saveData
+Controller: Defaults\Setting\Password | Action: update
+Before    : {
+    "id": "13",
+    "satker_id": "0102",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$N3hwVWxDcFl5ZmVHbDRWQOgDP8T37q8Y8kEbQ7pimh2SrMymL9JXy",
+    "pass_enc": "3b6JJXthDFFvlW38jxPV1mi7PhYbyk5yGMHWhYR8Bad9fRje+iUOXW9MYsKqcUOVIM2O55sjjpSR0+Wx\/QTFEg==",
+    "id_role": "10",
+    "state": "1"
+}
+After     : {
+    "id": "13",
+    "satker_id": "0102",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$bWlwL0ZCRlRqcnJidCt5NOQUejYYrS6zeZvDnwjDl7e.oDOa\/vyPS",
+    "pass_enc": "njCgE6JtAChV7LEB37bT6NYSGy9Eh4Qy5PuT1cS379eBX7Vc3doYJFa5GN1vfus6KXPRKG4xIrRLANgQt1sUhg==",
+    "id_role": "10",
+    "state": "1"
+}
+Response  : true
+--------------------------------------------------------------------------------
