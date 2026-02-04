@@ -1,0 +1,357 @@
+[2026-02-04 13:57:37] superadmin (::1) - Melakukan perubahan data otorisasi menu
+URL       : localhost/panel/setting/otoritas_menu//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_hak`(?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "9",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                }
+            ],
+            "time": 0.0075418949127197266
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiMenu\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:00:56] superadmin (::1) - Melakukan perubahan data otorisasi akses
+URL       : localhost/panel/setting/otoritas_aksi//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_aksi`(?, ?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "10",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "input",
+                    "type": 2
+                }
+            ],
+            "time": 0.0022377967834472656
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiAksi\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:01:24] superadmin (::1) - Melakukan perubahan data otorisasi akses
+URL       : localhost/panel/setting/otoritas_aksi//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_aksi`(?, ?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "10",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "input",
+                    "type": 2
+                }
+            ],
+            "time": 0.0008070468902587891
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiAksi\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:01:38] superadmin (::1) - Melakukan perubahan data otorisasi akses
+URL       : localhost/panel/setting/otoritas_aksi//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_aksi`(?, ?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "9",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "0",
+                    "type": 2
+                },
+                {
+                    "value": "input",
+                    "type": 2
+                }
+            ],
+            "time": 0.0026209354400634766
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiAksi\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:01:41] superadmin (::1) - Melakukan perubahan data otorisasi akses
+URL       : localhost/panel/setting/otoritas_aksi//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_aksi`(?, ?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "9",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "input",
+                    "type": 2
+                }
+            ],
+            "time": 0.006251811981201172
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiAksi\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:02:03] superadmin (::1) - Melakukan perubahan data otorisasi menu
+URL       : localhost/panel/setting/otoritas_menu//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_hak`(?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "10",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                }
+            ],
+            "time": 0.00468897819519043
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiMenu\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:04:12] superadmin (::1) - Melakukan perubahan data otorisasi akses
+URL       : localhost/panel/setting/otoritas_aksi//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_aksi`(?, ?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "0",
+                    "type": 2
+                },
+                {
+                    "value": "input",
+                    "type": 2
+                }
+            ],
+            "time": 0.004319906234741211
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiAksi\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:04:18] superadmin (::1) - Melakukan perubahan data otorisasi akses
+URL       : localhost/panel/setting/otoritas_aksi//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_aksi`(?, ?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "input",
+                    "type": 2
+                }
+            ],
+            "time": 0.0023009777069091797
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiAksi\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:04:40] superadmin (::1) - Melakukan perubahan data otorisasi akses
+URL       : localhost/panel/setting/otoritas_aksi//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_aksi`(?, ?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "0",
+                    "type": 2
+                },
+                {
+                    "value": "input",
+                    "type": 2
+                }
+            ],
+            "time": 0.0026750564575195312
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiAksi\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:04:45] superadmin (::1) - Melakukan perubahan data otorisasi akses
+URL       : localhost/panel/setting/otoritas_aksi//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_aksi`(?, ?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                },
+                {
+                    "value": "input",
+                    "type": 2
+                }
+            ],
+            "time": 0.0020978450775146484
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiAksi\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:09:53] superadmin (::1) - Melakukan perubahan data otorisasi menu
+URL       : localhost/panel/setting/otoritas_menu//setAkses
+Controller: CALL SP | Action: 
+Before    : {
+    "queryLog": [
+        {
+            "sql": "CALL `system_sp_set_menu_hak`(?, ?, ?)",
+            "bindings": [
+                {
+                    "value": "9",
+                    "type": 2
+                },
+                {
+                    "value": "5",
+                    "type": 2
+                },
+                {
+                    "value": "1",
+                    "type": 2
+                }
+            ],
+            "time": 0.015445947647094727
+        }
+    ]
+}
+After     : true
+Response  : "Setting\/OtorisasiMenu\/Controller"
+--------------------------------------------------------------------------------
+[2026-02-04 14:46:04] superadmin (::1) - Melakukan penambahan data pada modul atau class App\Modules\Defaults\Setting\User\UserModel
+URL       : localhost/panel/setting/user/saveData
+Controller: Defaults\Setting\User | Action: create
+Before    : null
+After     : {
+    "id": "13",
+    "satker_id": "0102",
+    "username": "usertes",
+    "nip": null,
+    "nama": "usertes",
+    "password": "$2y$10$N3hwVWxDcFl5ZmVHbDRWQOgDP8T37q8Y8kEbQ7pimh2SrMymL9JXy",
+    "pass_enc": "3b6JJXthDFFvlW38jxPV1mi7PhYbyk5yGMHWhYR8Bad9fRje+iUOXW9MYsKqcUOVIM2O55sjjpSR0+Wx\/QTFEg==",
+    "id_role": "10",
+    "state": "1"
+}
+Response  : true
+--------------------------------------------------------------------------------

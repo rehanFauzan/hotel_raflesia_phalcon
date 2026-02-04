@@ -356,4 +356,34 @@ class Controller extends BaseController
             ]);
         }
     }
+
+    /**
+     * @routeGet('/getSatker')
+     */
+    public function getSatkerAction()
+    {
+        $satker = $this->db->query("SELECT kode_satker, nama_satker FROM master_satker ORDER BY nama_satker ASC");
+        $satker->setFetchMode(\Phalcon\Db\Enum::FETCH_ASSOC);
+        $data = $satker->fetchAll();
+
+        return $this->response->setJsonContent([
+            'error' => 0,
+            'data' => $data
+        ]);
+    }
+
+    /**
+     * @routeGet('/getRole')
+     */
+    public function getRoleAction()
+    {
+        $role = $this->db->query("SELECT id, role FROM system_role WHERE status = 1 ORDER BY role ASC");
+        $role->setFetchMode(\Phalcon\Db\Enum::FETCH_ASSOC);
+        $data = $role->fetchAll();
+
+        return $this->response->setJsonContent([
+            'error' => 0,
+            'data' => $data
+        ]);
+    }
 }

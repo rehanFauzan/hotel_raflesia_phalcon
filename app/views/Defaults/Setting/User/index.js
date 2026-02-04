@@ -483,11 +483,11 @@ function renderSelect2Action() {
 		allowClear: true,
 		theme: "bootstrap-5",
         selectionCssClass: "select2--small",
-        dropdownCssClass: "select2--small", // Gunakan '100%' agar responsif
+        dropdownCssClass: "select2--small",
 		dropdownParent: $('#elFilterParentSatker'),
 		placeholder: "Pilih Satuan Kerja",
 		ajax: {
-			url: "{{ url('panel/referensi/getSatuankerja') }}",
+			url: defaultUrl + "getSatker",
 			data: function (params) {
 				return {
 					q: params.term,
@@ -495,17 +495,13 @@ function renderSelect2Action() {
 				};
 			},
 			processResults: function (response) {
-				var data = JSON.parse(response);
 				return {
-					results: data.data.map(function (i) {
+					results: response.data.map(function (i) {
 						return {
 							id: i.kode_satker,
 							text: `(${i.kode_satker}) ${i.nama_satker}`
 						};
-					}),
-					pagination: {
-						more: data.has_more,
-					},
+					})
 				};
 			},
 		},
@@ -547,11 +543,11 @@ function renderSelect2Action() {
 		allowClear: true,
 		theme: "bootstrap-5",
         selectionCssClass: "select2--small",
-        dropdownCssClass: "select2--small", // Gunakan '100%' agar responsif
+        dropdownCssClass: "select2--small",
 		dropdownParent: $('#elFilterParentRole'),
 		placeholder: "Pilih Hak Akses",
 		ajax: {
-			url: "{{ url('panel/referensi/getRolemaster') }}",
+			url: defaultUrl + "getRole",
 			data: function (params) {
 				return {
 					q: params.term,
@@ -559,17 +555,13 @@ function renderSelect2Action() {
 				};
 			},
 			processResults: function (response) {
-				var data = JSON.parse(response);
 				return {
-					results: data.data.map(function (i) {
+					results: response.data.map(function (i) {
 						return {
 							id: i.id,
-							text: `${i.role}`
+							text: i.role
 						};
-					}),
-					pagination: {
-						more: data.has_more,
-					},
+					})
 				};
 			},
 		},
