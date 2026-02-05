@@ -1333,7 +1333,7 @@ if (phoenixIsRTL) {
 			</button>
 			<a class="navbar-brand me-1 me-sm-3" href="<?= $this->url->get('dashboard') ?>">
 				<div class="d-flex align-items-center">
-					<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/<?= 'logo-pdamid-'.$this->session->pdam->id.'.png'; ?>" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
+					<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/logo-pdam-13.png" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
 						<h5 class="logo-text ms-2 d-none d-sm-block"><?= $this->session->pdam->nama_aplikasi ?></h5>
 						<h6 class="logo-text fs-8 fw-bold">
 							&nbsp; &nbsp; Login :
@@ -1807,7 +1807,7 @@ if (phoenixIsRTL) {
 					</button>
 					<a class="navbar-brand me-1 me-sm-3" href="<?= $this->url->get('dashboard') ?>">
 						<div class="d-flex align-items-center">
-							<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/<?= 'logo-pdamid-'.$this->session->pdam->id.'.png'; ?>" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
+							<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/logo-pdam-13.png" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
 								<h5 class="logo-text ms-2 d-none d-sm-block"><?= $this->session->pdam->nama_aplikasi ?></h5>
 								<h6 class="logo-text fs-8 fw-bold">
 									&nbsp; &nbsp; Login :
@@ -2183,6 +2183,11 @@ if (navbarVerticalStyle === 'darker') {
 						<?php if ($is_can_delete == '1') { ?>
 							<button class="btn btn-sm btn-danger my-1" id="btn-delete">
 								<span class="fas fa-trash me-2"></span>Hapus
+							</button>
+						<?php } ?>
+						<?php if ($is_can_print == '1') { ?>
+							<button class="btn btn-sm btn-info my-1" id="btn-print">
+								<span class="fas fa-print me-2"></span>Cetak
 							</button>
 						<?php } ?>
 					</div>
@@ -2734,6 +2739,7 @@ $(document).ready(function() {
     // Set Default To Disable
     $('#btn-edit').addClass('disabled');
     $('#btn-delete').addClass('disabled');
+    $('#btn-print').addClass('disabled');
 
     renderViewDatatableAction();
 
@@ -3011,6 +3017,21 @@ $(document).ready(function() {
         });
     });
 
+    $('#btn-print').click(function(e) {
+        e.preventDefault();
+        
+        if (!rowData || !rowData.id) {
+            notyf.open({
+                type: "warning",
+                message: "Pilih data pembayaran yang ingin dicetak terlebih dahulu!",
+            });
+            return false;
+        }
+        
+        // Open PDF in new window
+        window.open(defaultUrl + 'cetakPdf/' + rowData.id, '_blank');
+    });
+
     $('#btn-submit').click(function(e) {
         e.preventDefault();
         
@@ -3209,10 +3230,12 @@ function renderViewDatatableAction() {
             $(this).removeClass("selected");
             $("#btn-edit").addClass("disabled");
             $("#btn-delete").addClass("disabled");
+            $("#btn-print").addClass("disabled");
         } else {
             $(this).addClass("selected");
             $("#btn-edit").removeClass("disabled");
             $("#btn-delete").removeClass("disabled");
+            $("#btn-print").removeClass("disabled");
             
             let selectedData = table.row(this).data();
             if (selectedData) {

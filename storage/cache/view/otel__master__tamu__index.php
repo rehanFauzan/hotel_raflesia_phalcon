@@ -1333,7 +1333,7 @@ if (phoenixIsRTL) {
 			</button>
 			<a class="navbar-brand me-1 me-sm-3" href="<?= $this->url->get('dashboard') ?>">
 				<div class="d-flex align-items-center">
-					<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/<?= 'logo-pdamid-'.$this->session->pdam->id.'.png'; ?>" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
+					<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/logo-pdam-13.png" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
 						<h5 class="logo-text ms-2 d-none d-sm-block"><?= $this->session->pdam->nama_aplikasi ?></h5>
 						<h6 class="logo-text fs-8 fw-bold">
 							&nbsp; &nbsp; Login :
@@ -1807,7 +1807,7 @@ if (phoenixIsRTL) {
 					</button>
 					<a class="navbar-brand me-1 me-sm-3" href="<?= $this->url->get('dashboard') ?>">
 						<div class="d-flex align-items-center">
-							<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/<?= 'logo-pdamid-'.$this->session->pdam->id.'.png'; ?>" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
+							<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/logo-pdam-13.png" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
 								<h5 class="logo-text ms-2 d-none d-sm-block"><?= $this->session->pdam->nama_aplikasi ?></h5>
 								<h6 class="logo-text fs-8 fw-bold">
 									&nbsp; &nbsp; Login :

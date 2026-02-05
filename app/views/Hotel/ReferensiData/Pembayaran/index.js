@@ -91,6 +91,7 @@ $(document).ready(function() {
     // Set Default To Disable
     $('#btn-edit').addClass('disabled');
     $('#btn-delete').addClass('disabled');
+    $('#btn-print').addClass('disabled');
 
     renderViewDatatableAction();
 
@@ -368,6 +369,21 @@ $(document).ready(function() {
         });
     });
 
+    $('#btn-print').click(function(e) {
+        e.preventDefault();
+        
+        if (!rowData || !rowData.id) {
+            notyf.open({
+                type: "warning",
+                message: "Pilih data pembayaran yang ingin dicetak terlebih dahulu!",
+            });
+            return false;
+        }
+        
+        // Open PDF in new window
+        window.open(defaultUrl + 'cetakPdf/' + rowData.id, '_blank');
+    });
+
     $('#btn-submit').click(function(e) {
         e.preventDefault();
         
@@ -566,10 +582,12 @@ function renderViewDatatableAction() {
             $(this).removeClass("selected");
             $("#btn-edit").addClass("disabled");
             $("#btn-delete").addClass("disabled");
+            $("#btn-print").addClass("disabled");
         } else {
             $(this).addClass("selected");
             $("#btn-edit").removeClass("disabled");
             $("#btn-delete").removeClass("disabled");
+            $("#btn-print").removeClass("disabled");
             
             let selectedData = table.row(this).data();
             if (selectedData) {

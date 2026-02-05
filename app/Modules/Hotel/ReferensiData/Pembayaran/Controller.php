@@ -8,6 +8,7 @@ use Core\Facades\Response;
 use Core\Paginator\DataTables\DataTable;
 use App\Modules\Defaults\BaseController;
 use Exception;
+use App\Libraries\exFPDF;
 
 /**
  * @routeGroup('/hotel/referensi-data/pembayaran')
@@ -446,5 +447,111 @@ class Controller extends BaseController
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ]);
         }
+    }
+
+    /**
+     * @routeGet('/cetakPdf/{id:[0-9]+}')
+     */
+    public function cetakPdfAction()
+    {
+        $id = $this->dispatcher->getParam('id');
+        
+        if (!$id) {
+            throw new \Exception('ID pembayaran tidak ditemukan');
+        }
+        // Get payment data with related information
+        $pembayaran = $this->modelsManager->createBuilder()
+            ->columns('pb.id, pb.pemesanan_id, pb.metode_pembayaran, pb.jumlah_bayar, pb.tanggal_bayar, pb.status, pb.keterangan, p.kode_booking, p.total_harga, p.tanggal_checkin, p.tanggal_checkout, p.jumlah_malam, p.jumlah_tamu, t.nama_lengkap as tamu_nama, r.nomor_kamar, COALESCE(tk.harga_per_malam, 500000) as harga_per_malam')
+            ->from(['pb' => Model::class])
+            ->innerJoin('App\\Modules\\Hotel\\ReferensiData\\Pemesanan\\Model', 'pb.pemesanan_id = p.id', 'p')
+            ->innerJoin('App\\Modules\\Hotel\\Master\\Tamu\\Model', 'p.tamu_id = t.id', 't')
+            ->leftJoin('App\\Modules\\Hotel\\Master\\Kamar\\Model', 'p.ruangan_id = r.id', 'r')
+            ->leftJoin('App\\Modules\\Hotel\\Master\\TipeKamar\\Model', 'r.tipe_ruangan_id = tk.id', 'tk')
+            ->where('pb.id = :id:', ['id' => $id])
+            ->getQuery()
+            ->execute()
+            ->getFirst();
+
+        if (!$pembayaran) {
+            throw new \Exception('Data pembayaran tidak ditemukan');
+        }
+
+        // Create PDF - receipt style
+        $pdf = new exFPDF('P', 'mm', array(80, 200));
+        $pdf->AddPage();
+        
+        // Header - receipt style
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetXY(5, 5);
+        $pdf->Cell(70, 6, 'BUKTI PEMBAYARAN', 0, 1, 'C');
+        $pdf->SetX(5);
+        $pdf->Cell(70, 5, 'HOTEL RAFLESIA BANDUNG', 0, 1, 'C');
+        $pdf->Ln(2);
+        $pdf->Line(5, $pdf->GetY(), 75, $pdf->GetY());
+        $pdf->Ln(3);
+        
+        // Transaction info - receipt style
+        $pdf->SetFont('Arial', '', 8);
+        $pdf->SetX(5);
+        $pdf->Cell(70, 4, 'No. Transaksi: TRX/' . date('Y') . '/' . str_pad($pembayaran->id, 3, '0', STR_PAD_LEFT), 0, 1, 'L');
+        
+        $pdf->SetX(5);
+        $pdf->Cell(70, 4, 'Tanggal: ' . date('d M Y H:i', strtotime($pembayaran->tanggal_bayar)), 0, 1, 'L');
+        
+        $pdf->SetX(5);
+        $pdf->Cell(70, 4, 'Tipe: Reservasi Kamar', 0, 1, 'L');
+        
+        $pdf->Ln(2);
+        
+        $pdf->SetX(5);
+        $pdf->Cell(70, 4, 'DETAIL PEMBAYARAN:', 0, 1, 'L');
+        
+        // Calculate breakdown with null checks
+        $hargaKamar = ($pembayaran->harga_per_malam ?? 500000) * ($pembayaran->jumlah_malam ?? 1);
+        $breakfast = ($pembayaran->jumlah_tamu ?? 1) * 50000;
+        $taxService = ($hargaKamar + $breakfast) * 0.21;
+        
+        $pdf->SetX(5);
+        $pdf->Cell(50, 4, '* Kamar ' . ($pembayaran->nomor_kamar ?? 'N/A') . ' (' . ($pembayaran->jumlah_malam ?? 1) . ' malam)', 0, 0, 'L');
+        $pdf->Cell(20, 4, ': ' . number_format($hargaKamar/1000, 0) . 'K', 0, 1, 'R');
+        
+        $pdf->SetX(5);
+        $pdf->Cell(50, 4, '* Breakfast ' . ($pembayaran->jumlah_tamu ?? 1) . ' orang', 0, 0, 'L');
+        $pdf->Cell(20, 4, ': ' . number_format($breakfast/1000, 0) . 'K', 0, 1, 'R');
+        
+        $pdf->SetX(5);
+        $pdf->Cell(50, 4, '* Tax & Service', 0, 0, 'L');
+        $pdf->Cell(20, 4, ': ' . number_format($taxService/1000, 0) . 'K', 0, 1, 'R');
+        
+        $pdf->Ln(2);
+        $pdf->Line(5, $pdf->GetY(), 75, $pdf->GetY());
+        $pdf->Ln(2);
+        
+        // Total section
+        $pdf->SetX(5);
+        $pdf->Cell(50, 4, 'TOTAL', 0, 0, 'L');
+        $pdf->Cell(20, 4, ': ' . number_format($pembayaran->total_harga/1000, 0) . 'K', 0, 1, 'R');
+        
+        $pdf->SetX(5);
+        $pdf->Cell(50, 4, 'BAYAR', 0, 0, 'L');
+        $pdf->Cell(20, 4, ': ' . number_format($pembayaran->jumlah_bayar/1000, 0) . 'K', 0, 1, 'R');
+        
+        $kembalian = $pembayaran->jumlah_bayar - $pembayaran->total_harga;
+        $pdf->SetX(5);
+        $pdf->Cell(50, 4, 'KEMBALI', 0, 0, 'L');
+        $pdf->Cell(20, 4, ': ' . number_format($kembalian/1000, 0) . 'K', 0, 1, 'R');
+        
+        $pdf->Ln(2);
+        $pdf->Line(5, $pdf->GetY(), 75, $pdf->GetY());
+        $pdf->Ln(3);
+        
+        // Footer
+        $pdf->SetX(5);
+        $pdf->Cell(70, 4, 'Terima kasih atas kunjungan Anda', 0, 1, 'C');
+        
+        // Output PDF
+        $filename = 'Bukti_Pembayaran_' . $pembayaran->kode_booking . '_' . date('Ymd_His') . '.pdf';
+        $pdf->Output('D', $filename);
+        exit;
     }
 }

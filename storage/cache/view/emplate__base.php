@@ -331,7 +331,7 @@ if (phoenixIsRTL) {
 
 						";s:10:"navigation";a:3:{i:0;a:4:{s:4:"type";i:357;s:5:"value";s:7:"
 					";s:4:"file";s:99:"/Applications/XAMPP/xamppfiles/htdocs/hotel_reservasi_raflesia_bandung/app/views/template/base.volt";s:4:"line";i:321;}i:1;a:4:{s:4:"type";i:313;s:4:"path";a:4:{s:4:"type";i:260;s:5:"value";s:41:"template/navigation-dynamic-vertical.volt";s:4:"file";s:99:"/Applications/XAMPP/xamppfiles/htdocs/hotel_reservasi_raflesia_bandung/app/views/template/base.volt";s:4:"line";i:321;}s:4:"file";s:99:"/Applications/XAMPP/xamppfiles/htdocs/hotel_reservasi_raflesia_bandung/app/views/template/base.volt";s:4:"line";i:322;}i:2;a:4:{s:4:"type";i:357;s:5:"value";s:6:"
-				";s:4:"file";s:99:"/Applications/XAMPP/xamppfiles/htdocs/hotel_reservasi_raflesia_bandung/app/views/template/base.volt";s:4:"line";i:322;}}i:3;s:83938:"
+				";s:4:"file";s:99:"/Applications/XAMPP/xamppfiles/htdocs/hotel_reservasi_raflesia_bandung/app/views/template/base.volt";s:4:"line";i:322;}}i:3;s:83862:"
 
 			</div>
 		</div>
@@ -1170,7 +1170,7 @@ if (phoenixIsRTL) {
 			</button>
 			<a class="navbar-brand me-1 me-sm-3" href="<?= $this->url->get('dashboard') ?>">
 				<div class="d-flex align-items-center">
-					<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/<?= 'logo-pdamid-'.$this->session->pdam->id.'.png'; ?>" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
+					<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/logo-pdam-13.png" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
 						<h5 class="logo-text ms-2 d-none d-sm-block"><?= $this->session->pdam->nama_aplikasi ?></h5>
 						<h6 class="logo-text fs-8 fw-bold">
 							&nbsp; &nbsp; Login :
@@ -1644,7 +1644,7 @@ if (phoenixIsRTL) {
 					</button>
 					<a class="navbar-brand me-1 me-sm-3" href="<?= $this->url->get('dashboard') ?>">
 						<div class="d-flex align-items-center">
-							<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/<?= 'logo-pdamid-'.$this->session->pdam->id.'.png'; ?>" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
+							<div class="d-flex align-items-center"><img src="<?= $this->url->get('external_img') ?>/logo-pdam-13.png" alt="<?= $this->session->pdam->nama_aplikasi ?>" width="27"/>
 								<h5 class="logo-text ms-2 d-none d-sm-block"><?= $this->session->pdam->nama_aplikasi ?></h5>
 								<h6 class="logo-text fs-8 fw-bold">
 									&nbsp; &nbsp; Login :

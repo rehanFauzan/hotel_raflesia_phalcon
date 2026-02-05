@@ -59,6 +59,11 @@
 								<span class="fas fa-trash me-2"></span>Hapus
 							</button>
 						{% endif %}
+						{% if is_can_print == '1' %}
+							<button class="btn btn-sm btn-info my-1" id="btn-print">
+								<span class="fas fa-print me-2"></span>Cetak
+							</button>
+						{% endif %}
 					</div>
 				</div>
 			</div>
