@@ -2180,11 +2180,6 @@ if (navbarVerticalStyle === 'darker') {
 								<span class="fas fa-pencil-alt me-2"></span>Edit
 							</button>
 						<?php } ?>
-						<?php if ($is_can_print == '1') { ?>
-							<button class="btn btn-sm btn-info my-1" id="btn-cetak">
-								<span class="fas fa-print me-2"></span>Cetak Bukti
-							</button>
-						<?php } ?>
 						<?php if ($is_can_delete == '1') { ?>
 							<button class="btn btn-sm btn-danger my-1" id="btn-delete">
 								<span class="fas fa-trash me-2"></span>Hapus

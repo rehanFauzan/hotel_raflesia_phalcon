@@ -12,7 +12,7 @@
 			<title>
 			<?= $this->session->pdam->nama_aplikasi ?>
 			-
-	Setting - Otoritas Menu - Set Menu Akses
+    Setting - Pengaturan TTD
 
 		</title>
 
@@ -312,6 +312,116 @@ if (phoenixIsRTL) {
 	</style>
 
 	
+
+	<style>
+		table th,
+		table td {
+			padding: 6px !important; /* Mengurangi padding */
+		}
+		#datatables-barang tbody tr {
+			height: 50px; /* Atur tinggi baris */
+		}
+
+		#datatables-barang tbody td {
+			padding: 12px 10px; /* Atur padding di dalam sel */
+		}
+
+
+		.dropdown-indicator-icon {
+			right: 1.5rem;
+			top: 1.25rem;
+		}
+
+		.dropdown-indicator-icon .fa-angle-down {
+			-webkit-transition: 0.5s ease transform;
+			-o-transition: 0.5s ease transform;
+			transition: 0.5s ease transform
+		}
+		[aria-expanded=true].dropdown-indicator-icon .fa-angle-down {
+			-webkit-transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			transform: rotate(180deg)
+		}
+
+		.fieldset-custom {
+			border: 1px solid #dee2e6;
+			border-radius: 0.5rem;
+			padding: 1.5rem 1.5rem 1rem;
+			margin-bottom: 1.5rem;
+			background-color: #fff;
+		}
+
+		.fieldset-custom legend {
+			font-size: 1.1rem;
+			font-weight: 600;
+			color: #343a40;
+			padding: 0 0.75rem;
+			width: auto;
+			margin-bottom: 0.5rem;
+		}
+
+		@media(max-width: 576px) {
+			.fieldset-custom {
+				padding: 1rem 0.5rem 0.5rem;
+			}
+			.fieldset-custom legend {
+				font-size: 1rem;
+				padding: 0 0.5rem;
+			}
+		}
+
+		.input-group > .select2-container--default {
+			width: auto !important;
+			flex: 1 1 auto !important;
+		}
+
+		.input-group > .select2-container--default .select2-selection--single {
+			height: 100% !important;
+			line-height: inherit !important;
+		}
+
+		/* Overlay untuk form detail */
+		.overlay-form-detail {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(255, 255, 255, 0.9);
+			z-index: 10;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 0.5rem;
+		}
+
+		.overlay-content {
+			background: white;
+			padding: 2rem;
+			border-radius: 0.5rem;
+			box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+			border: 1px solid #dee2e6;
+		}
+
+		#card-form-detail {
+			transition: all 0.3s ease;
+		}
+
+		#card-form-detail.disabled {
+			opacity: 0.6;
+		}
+
+		#btn-pengisian-jurnal {
+			transition: all 0.3s ease;
+		}
+
+		#btn-pengisian-jurnal:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+	</style>
+
+
 
 </head>
 
@@ -2151,52 +2261,77 @@ if (navbarVerticalStyle === 'darker') {
 			<li class="breadcrumb-item">
 				<a href="#!">Setting</a>
 			</li>
-			<li class="breadcrumb-item">Otoritas Menu</li>
-			<li class="breadcrumb-item active">Set Menu Akses</li>
+			<li class="breadcrumb-item active">Pengaturan TTD</li>
 		</ol>
 	</nav>
-	
 	<div class="mb-9">
 		<div class="row g-2 mb-4">
 			<div class="col-auto">
-				<h2 class="mb-0">Hak: <?= $hak_nama ?></h2>
+				<h2 class="mb-0">Pengaturan TTD</h2>
 			</div>
 		</div>
-		
-		<div class="card">
-			<div class="card-body">
-				<input type="hidden" id="id_hak" name="id_hak" value="<?= $id_hak ?>" class="form-control">
-				
-				<div class="batch-actions mb-3">
-					<button class="btn btn-success btn-sm" onclick="batchSetAccess()">
-						<i data-feather="check" class="feather-icon"></i> Beri Akses Terpilih
-					</button>
-					<button class="btn btn-danger btn-sm" onclick="batchRemoveAccess()">
-						<i data-feather="x" class="feather-icon"></i> Hapus Akses Terpilih
-					</button>
-				</div>
 
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th class="text-center" style="width: 50px">
-									<input type="checkbox" id="select-all" onchange="toggleSelectAll()">
-								</th>
-								<th class="text-center" style="width: 50px">No</th>
-								<th>Menu</th>
-								<th>URL</th>
-								<th class="text-center" style="width: 100px">Akses</th>
-								<th class="text-center" style="width: 150px">Aksi</th>
-							</tr>
-						</thead>
-						<tbody id="table-data">
-						</tbody>
-					</table>
+        <form id="manageForm">
+			<div class="row">
+				<div class="col-12">
+					<div class="container d-flex justify-content-center">
+						<div class="card shadow-none border my-4" style="width:100%;">
+							<div class="card-header p-4 border-bottom bg-body">
+								<div class="row g-3 justify-content-between align-items-center">
+									<div class="col-12 col-md">
+										<h5 class="text-body mb-0 text-center">Pilih Filter</h5>
+									</div>
+								</div>
+							</div>
+							<div class="card-body p-0">
+								<div class="p-4 code-to-copy">
+								<input type="hidden" id="input-action" name="input_action" value="store"/>	
+
+                                    <div class="mb-3">
+										<div class="input-group input-group-sm" id="elFilterParentDokumen">
+											<span class="input-group-text fw-bold" id="lbl_dokumen">
+												Dokumen
+											</span>
+											<select name="dokumen" id="dokumen" class="form-control form-select"></select>
+										</div>
+									</div>
+
+                                    <div class="mb-3">
+										<div class="input-group input-group-sm" id="elFilterParentJumlahTTD">
+											<span class="input-group-text fw-bold" id="lbl_jumlah_ttd">
+												Jumlah TTD
+											</span>
+                                            <select name="jumlah_ttd" id="jumlah_ttd" class="form-control form-control-sm">
+                                                <option selected disabled value="">Pilih Jumlah TTD</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>	
+                                                <option value="5">5</option>	
+                                            </select>
+										</div>
+									</div>
+
+									<!-- Container untuk menampung inputan TTD -->
+									<div id="ttd_container"></div>
+
+								</div>
+							</div>
+
+							<div class="card-footer text-end">
+								<button type="submit" class="ml-1 btn btn-success btn-sm" id="btn-submit">
+									<i class="fas fa-save"></i>
+										Simpan
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
+		</form>      
+
 	</div>
+
 
 
 		<footer class="footer position-absolute">
@@ -2450,281 +2585,329 @@ $(e.currentTarget).data('datepicker').hide(); // Sembunyikan setelah pilih bulan
 function escapeHtml(str) {
 return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }</script><script>
-	window.defaultUrl = `${baseUrl}panel/setting/otoritas_menu/`;
-var table;
+	window.defaultUrl = `${baseUrl}panel/setting/pengaturan-ttd/`;
+
+var formManage = $('#manageForm');
+
+var csrfKey = "<?php echo $this->security->getTokenKey() ?>";
+var csrfValue = "<?php echo $this->security->getToken() ?>";
 
 $(document).ready(function () {
-    loadMenu();
 
-    $("#btn_back").click(function (e) {
-        e.preventDefault();
-        window.location.href = defaultUrl;
+    // Handle jumlah TTD manual (tidak menghapus data kecuali jumlah dikurangi)
+    $('#jumlah_ttd').on('change', function () {
+        let jumlah = parseInt($(this).val(), 10) || 0;
+        let container = $('#ttd_container');
+
+        // Hitung blok yang ada
+        let existingCount = container.find('.ttd-block').length;
+
+        // Tambah blok jika perlu
+        for (let i = existingCount + 1; i <= jumlah; i++) {
+            if ((i - 1) % 2 === 0) {
+                container.append('<div class="row"></div>');
+            }
+            container.find('.row:last').append(renderTTDBlock(i));
+        }
+
+        // Hapus blok jika jumlah dikurangi
+        if (jumlah < existingCount) {
+            container.find('.ttd-block').each(function () {
+                let idx = $(this).data('index');
+                if (idx > jumlah) $(this).remove();
+            });
+        }
+
+        renderSelect2Action();
     });
+
+    // Handle pilih dokumen (AJAX)
+    $('#dokumen').on('change', function () {
+        let dokumen = $(this).val();
+        let container = $('#ttd_container');
+        $('#ttd_container').html(''); // reset ke awal
+        $('#jumlah_ttd').val(''); // reset ke awal
+        // container.html(''); // reset ke awal
+
+        if (_.isEmpty(dokumen)) {
+            // kalau dokumen kosong, kembalikan state awal: jumlah 1 dan tampil 1 blok
+            $('#jumlah_ttd').val('');
+            $('#jumlah_ttd').trigger('change');
+            return;
+        }
+
+        $.ajax({
+            url: defaultUrl + "getDataTTD",
+            type: "POST",
+            data: { 
+                dokumen: dokumen 
+            },
+            beforeSend: function () {
+                $(".loading").removeClass("hide");
+            },
+            success: function (res) {
+                $(".loading").addClass("hide");
+
+                if (res.error === 0) {
+                    let data = res.data || [];
+
+                    if (data.length === 0) {
+                        // *** PERBAIKAN UTAMA ***
+                        // Kalau tidak ada data, set jumlah_ttd ke default 1 dan render 1 blok TTD
+                        notyf.info("Belum ada data TTD untuk dokumen ini");
+                        $('#jumlah_ttd').val('');
+                        $('#ttd_container').html(''); // pastikan kosong
+                        $('#jumlah_ttd').trigger('change'); // pakai handler jumlah untuk render 1 blok
+                        return;
+                    }
+
+                    // Kalau ada data: set jumlah_ttd sama dengan panjang data, lalu render data
+                    $('#jumlah_ttd').val(data.length);
+
+                    // render data TTD
+                    data.forEach((item, i) => {
+                        let index = i + 1;
+                        if ((index - 1) % 2 === 0) {
+                            container.append('<div class="row"></div>');
+                        }
+                        container.find('.row:last').append(renderTTDBlock(index, item));
+                    });
+
+                    renderSelect2Action();
+
+                } else {
+                    notyf.error(res.message);
+                }
+            },
+            error: function (xhr) {
+                $(".loading").addClass("hide");
+                notyf.error("Gagal ambil data: " + xhr.statusText);
+            }
+        });
+    });
+
+    // inisialisasi awal
+    $('#jumlah_ttd').trigger('change');
+
+    $('#btn-submit').click(function (e) {
+        e.preventDefault();
+
+        let valAction = formManage.find('#input-action').val();
+        if (_.isEmpty(valAction)) {
+            notyf.error("Terjadi kesalahan, silahkan refresh ulang");
+            return false;
+        }
+
+        let dokumen    = $.trim($('#dokumen').val());
+        let jumlah_ttd = $.trim($('#jumlah_ttd').val());
+        
+        if (!dokumen) {
+            notyf.open({ type: "warning", message: "Pilih Dokumen terlebih dahulu!" });
+            return;
+        }
+
+        if (!jumlah_ttd) {
+            notyf.open({ type: "warning", message: "Pilih Jumlah TTD terlebih dahulu!" });
+            return;
+        }
+
+        let urlActionText = (valAction === "store") ? "menyimpan data" : "mengubah data";
+
+        if (formManage.valid()) {
+            $.confirm({
+                title: "Konfirmasi",
+                theme: "modern",
+                content: "Anda yakin ingin " + urlActionText + " yang telah diinput?",
+                buttons: {
+                    Tidak: {
+                        text: "Tidak",
+                        btnClass: "btn-warning",
+                    },
+                    Ya: {
+                        text: "Ya",
+                        btnClass: "btn-primary",
+                        action: function () {
+                            ajaxSubmitTTD();
+                        }
+                    }
+                }
+            });
+        }
+    });
+
 });
 
-function toggleSelectAll() {
-    const isChecked = $('#select-all').prop('checked');
-    $('.menu-checkbox').prop('checked', isChecked);
+// render block TTD (pakai ini dari kode sebelumnya)
+function renderTTDBlock(index, item = {}) {
+    return `
+    <div class="col-md-6 ttd-block" data-index="${index}">
+        <div class="card mb-3 p-2 shadow-sm">
+            <h6 class="fw-bold mb-3">${index}.</h6>
+
+            <div class="mb-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text fw-bold">Keterangan</span>
+                    <input type="text" name="ttd[${index}][keterangan]" class="form-control form-control-sm" value="${item.keterangan ?? ''}">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text fw-bold">Pegawai</span>
+                    <select name="ttd[${index}][nama_temp]" class="form-control form-select form-control-sm select-nama-temp">
+                        ${item.nama ? `<option value="${item.nama}" selected>${item.nama}</option>` : ""}
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text fw-bold">Nama</span>
+                    <input type="text" name="ttd[${index}][nama]" class="form-control form-control-sm" value="${item.nama ?? ''}">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text fw-bold">Jabatan</span>
+                    <input type="text" name="ttd[${index}][jabatan]" class="form-control form-control-sm" value="${item.jabatan ?? ''}">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text fw-bold">NUP</span>
+                    <input type="text" name="ttd[${index}][nup]" class="form-control form-control-sm" value="${item.nup ?? ''}">
+                </div>
+            </div>
+        </div>
+    </div>`;
 }
 
-function getSelectedMenuIds() {
-    const selectedMenus = [];
-    $('.menu-checkbox:checked').each(function () {
-        selectedMenus.push($(this).data('menu-id'));
-    });
-    return selectedMenus;
-}
-
-function batchSetAccess() {
-    const selectedMenus = getSelectedMenuIds();
-    if (selectedMenus.length === 0) {
-        notyf.warning("Pilih menu yang akan diberi akses.");
+function ajaxSubmitTTD() {
+    let valAction = formManage.find('#input-action').val();
+    if (_.isEmpty(valAction)) {
+        notyf.error("Tidak diketahui aksi");
         return false;
     }
 
-    $.confirm({
-        title: "Konfirmasi",
-        theme: "modern",
-        content: `Beri akses untuk ${selectedMenus.length} menu yang dipilih?`,
-        buttons: {
-            Tidak: {
-                text: "Tidak",
-                btnClass: "btn-warning",
-            },
-            Ya: {
-                text: "Ya",
-                btnClass: "btn-primary",
-                action: function () {
-                    $.ajax({
-                        type: "POST",
-                        url: defaultUrl + "/setAksesBatch",
-                        data: {
-                            roleid: $("#id_hak").val(),
-                            menuids: selectedMenus,
-                            value: 1
-                        },
-                        dataType: "JSON",
-                        success: function (data) {
-                            if (data == 1) {
-                                notyf.success("Berhasil memberikan akses untuk menu yang dipilih.");
-                                loadMenu();
-                            } else {
-                                notyf.danger("Gagal memberikan akses.");
-                            }
-                        }
-                    });
-                }
-            }
-        }
-    });
-}
+    let urlAction = (valAction === "store") ? "saveData" : "updateData";
 
-function batchRemoveAccess() {
-    const selectedMenus = getSelectedMenuIds();
-    if (selectedMenus.length === 0) {
-        notyf.warning("Pilih menu yang akan dihapus aksesnya.");
-        return false;
-    }
+    let formData = new FormData(formManage[0]);
+    formData.append(csrfKey, csrfValue);
 
-    $.confirm({
-        title: "Konfirmasi",
-        theme: "modern",
-        content: `Hapus akses untuk ${selectedMenus.length} menu yang dipilih?`,
-        buttons: {
-            Tidak: {
-                text: "Tidak",
-                btnClass: "btn-warning",
-            },
-            Ya: {
-                text: "Ya",
-                btnClass: "btn-primary",
-                action: function () {
-                    $.ajax({
-                        type: "POST",
-                        url: defaultUrl + "/setAksesBatch",
-                        data: {
-                            roleid: $("#id_hak").val(),
-                            menuids: selectedMenus,
-                            value: 0
-                        },
-                        dataType: "JSON",
-                        success: function (data) {
-                            if (data == 1) {
-                                notyf.success("Berhasil menghapus akses untuk menu yang dipilih.");
-                                loadMenu();
-                            } else {
-                                notyf.error("Gagal menghapus akses.");
-                            }
-                        }
-                    });
-                }
-            }
-        }
-    });
-}
-
-function doInsert(roleid, menuid) {
-    $.confirm({
-        title: "Konfirmasi",
-        theme: "modern",
-        content: "Beri Akses untuk Hak Akses ini ?",
-        buttons: {
-            Tidak: {
-                text: "Tidak",
-                btnClass: "btn-warning",
-            },
-            Ya: {
-                text: "Ya",
-                btnClass: "btn-primary",
-                action: function () {
-                    $.ajax({
-                        type: "POST",
-                        data: {
-                            roleid: $("#id_hak").val(),
-                            menuid: menuid,
-                            value: 1,
-                        },
-                        url: defaultUrl + "/setAkses",
-                        dataType: "JSON",
-                        beforeSend: function (xhr) {
-                            // beforeRequesting(code);
-                        },
-                        success: function (data) {
-                            if (data == 1) {
-                                notyf.success("Berhasil ditambahkan akses.");
-                                loadMenu();
-                                // location.reload();
-                            } else {
-                                notyf.error("Gagal ditambahkan akses.");
-                                loadMenu();
-
-                            }
-                        },
-                    });
-                }
-            }
-        }
-    });
-}
-
-function doDelete(roleid, menuid) {
-    $.confirm({
-        title: "Konfirmasi",
-        theme: "modern",
-        content: "Hapus Akses untuk Hak Akses ini ?",
-        buttons: {
-            Tidak: {
-                text: "Tidak",
-                btnClass: "btn-warning",
-            },
-            Ya: {
-                text: "Ya",
-                btnClass: "btn-primary",
-                action: function () {
-                    $.ajax({
-                        type: "POST",
-                        url: defaultUrl + "/setAkses",
-                        data: {
-                            roleid: $("#id_hak").val(),
-                            menuid: menuid,
-                            value: 0,
-                        },
-                        dataType: "JSON",
-                        beforeSend: function (xhr) {
-                            // beforeRequesting(code);
-                        },
-                        success: function (data) {
-                            if (data == 1) {
-                                notyf.success("Berhasil dihapus akses.");
-                                loadMenu();
-                                // location.reload();
-                            } else {
-                                notyf.error("Gagal dihapus akses.");
-                                loadMenu();
-
-                            }
-                        },
-                    });
-                }
-            }
-        }
-    });
-}
-
-function loadMenu() {
     $.ajax({
-        url: defaultUrl + "loadMenu",
         type: "POST",
-        data: {
-            id: $('#id_hak').val()
-        },
+        url: defaultUrl + urlAction,
+        data: formData,
+        processData: false, // penting untuk FormData
+        contentType: false, // penting untuk FormData
         beforeSend: function () {
-            $(".loading").removeClass('hide');
+            $(".loading").removeClass("hide");
+            $('#btn-submit').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Menyimpan...');
         },
-        success: function (dt) {
-            $("#table-data").empty();
-            var dataMenu = JSON.parse(dt);
-            var i = 1;
+        success: function (response) {
+            $(".loading").addClass("hide");
+            $('#btn-submit').prop('disabled', false).html('<i class="fas fa-save"></i> Simpan');
 
-            $.each(dataMenu, function (index, value) {
-                var listData = "<tr class='" + (value.parent == 0 ? "bg-head" : "") + "'>";
-
-                // Checkbox column
-                listData += "<td class='text-center'>";
-                listData += "<input type='checkbox' class='menu-checkbox' data-menu-id='" + value.menu_id + "'>";
-                listData += "</td>";
-
-                // Number column
-                listData += "<td class='text-center'>" + i + "</td>";
-
-                // Menu name with proper indentation and icon
-                listData += "<td>";
-                var indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".repeat(value.parent_level);
-                listData += indent;
-                // Icon logic: use icon if available, else folder/file
-                if (value.icon) {
-                    listData += "<i data-feather='" + value.icon + "' class='feather-icon'></i> ";
-                } else if (value.parent == 0) {
-                    listData += "<i data-feather='folder' class='feather-icon'></i> ";
-                } else {
-                    listData += "<i data-feather='file' class='feather-icon'></i> ";
-                }
-                listData += value.nama;
-                listData += "</td>";
-
-                // URL column
-                listData += "<td>" + (value.link || "-") + "</td>";
-
-                // Access status column
-                listData += "<td class='text-center'>";
-                listData += value.id == 0 ?
-                    "<i data-feather='x' class='feather-icon text-danger'></i>" :
-                    "<i data-feather='check' class='feather-icon text-success'></i>";
-                listData += "</td>";
-
-                // Action column
-                listData += "<td class='text-center'>";
-                if (value.id == 0) {
-                    listData += "<button class='btn btn-sm btn-success' onclick='doInsert(" + value.id + "," + value.menu_id + ")'><i data-feather='check' class='feather-icon'></i> Beri Akses</button>";
-                } else {
-                    listData += "<button class='btn btn-sm btn-danger' onclick='doDelete(" + value.id + "," + value.menu_id + ")'><i data-feather='x' class='feather-icon'></i> Hapus Akses</button>";
-                }
-                listData += "</td>";
-
-                listData += "</tr>";
-                $("#table-data").append(listData);
-                i++;
-            });
-
-            // Initialize Feather icons
-            feather.replace();
-            $(".loading").addClass('hide');
+            if (response.error == 0) {
+                notyf.success(response.message);
+                // opsional: reset form atau reload container TTD
+                $('#ttd_container').html('');
+                $('#jumlah_ttd').trigger('change');
+					window.location.href = defaultUrl;
+            } else {
+                notyf.error(response.message);
+            }
         },
         error: function (e) {
-            alert('Error: ' + e);
-            $(".loading").addClass('hide');
+            $(".loading").addClass("hide");
+            $('#btn-submit').prop('disabled', false).html('<i class="fas fa-save"></i> Simpan');
+            notyf.error("Terjadi kesalahan: " + e.statusText);
         }
     });
+}
+
+function renderSelect2Action() {
+
+    $("#dokumen").select2({
+        allowClear: true,
+        theme: "bootstrap-5",
+        selectionCssClass: "select2--small",
+        dropdownCssClass: "select2--small",
+        dropdownParent: $('#elFilterParentDokumen'),
+        placeholder: "Pilih Dokumen",
+        ajax: {
+            url: "<?= $this->url->get('panel/refselect2/getReffTtdLapS2') ?>",
+            data: function (params) {
+                return {
+                    q: params.term,
+                    page: params.page || 1,
+                };
+            },
+            processResults: function (response) {
+                var data = JSON.parse(response);
+    
+                var results = data.data.map(function (i) {
+                    return {
+                        id: i.nama_lap,
+                        text: `${i.kelompok} (${i.nama_lap})`,
+                    };
+                });
+    
+                return {
+                    results: results,
+                    pagination: {
+                        more: data.has_more,
+                    },
+                };
+            },
+        },
+    });  
+
+    $(".select-nama-temp").select2({
+        allowClear: true,
+        theme: "bootstrap-5",
+        selectionCssClass: "select2--small",
+        dropdownCssClass: "select2--small",
+        placeholder: "Pilih Nama",
+        ajax: {
+            url: "<?= $this->url->get('panel/refselect2/getMasterUserModelS2') ?>",
+            data: function (params) {
+                return {
+                    q: params.term,
+                    page: params.page || 1,
+                };
+            },
+            processResults: function (response) {
+                var data = JSON.parse(response);
+                var results = data.data.map(function (i) {
+                    return {
+                        id: i.nama,
+                        text: `${i.nup} (${i.nama})`,
+                    };
+                });
+                return {
+                    results: results,
+                    pagination: { 
+                        more: data.has_more 
+                    }
+                };
+            },
+        },
+        dropdownPosition: 'beyond' // this is the key option for opening upwards
+    }).on('select2:select', function (e) {
+        
+        // Ketika nama_temp dipilih, simpan juga ke input nama
+        let selectedData = e.params.data;
+        let ttdBlock = $(this).closest('.ttd-block');
+        let namaInput = ttdBlock.find('input[name*="[nama]"]');
+
+        if (selectedData && selectedData.id) {
+            namaInput.val(selectedData.id);
+        }
+    });
+    
 }
 </script><script>// FontAwesome initialization and class management
 document.addEventListener('DOMContentLoaded', function () { // Ensure FontAwesome classes are present

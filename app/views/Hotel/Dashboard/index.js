@@ -194,7 +194,7 @@ function createRoomChart(data) {
     // Check if echarts is available
     if (typeof echarts === 'undefined') {
         console.error('ECharts library not found');
-        chartDom.innerHTML = '<div class="text-center p-4"><p>Room Status Data:</p><p>Terisi: ' + data.terisi + '</p><p>Tersedia: ' + data.tersedia + '</p><p>Maintenance: ' + data.maintenance + '</p></div>';
+        chartDom.innerHTML = '<div class="text-center p-4"><p>Room Status Data:</p><p>Ditempati: ' + data.ditempati + '</p><p>Tersedia: ' + data.tersedia + '</p><p>Maintenance: ' + data.maintenance + '</p></div>';
         return;
     }
     
@@ -242,7 +242,7 @@ function createRoomChart(data) {
                 show: false
             },
             data: [
-                { value: data.terisi, name: 'Terisi', itemStyle: { color: '#dc3545' } },
+                { value: data.ditempati, name: 'Ditempati', itemStyle: { color: '#dc3545' } },
                 { value: data.tersedia, name: 'Tersedia', itemStyle: { color: '#28a745' } },
                 { value: data.maintenance, name: 'Maintenance', itemStyle: { color: '#ffc107' } }
             ]

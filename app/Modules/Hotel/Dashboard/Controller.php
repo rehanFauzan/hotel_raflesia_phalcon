@@ -139,15 +139,13 @@ class Controller extends BaseController
         try {
             $today = date('Y-m-d');
             
-            // Kamar terisi
-            $kamarTerisiResult = $this->db->fetchOne("
+            // Kamar ditempati
+            $kamarDitempatResult = $this->db->fetchOne("
                 SELECT COUNT(*) as total 
-                FROM hotel_ruangan r 
-                JOIN hotel_pemesanan p ON r.id = p.ruangan_id 
-                WHERE p.status = 'checkin' 
-                AND '$today' BETWEEN p.tanggal_checkin AND p.tanggal_checkout
+                FROM hotel_ruangan 
+                WHERE status = 'ditempati'
             ");
-            $kamarTerisi = $kamarTerisiResult ? $kamarTerisiResult['total'] : 0;
+            $kamarDitempati = $kamarDitempatResult ? $kamarDitempatResult['total'] : 0;
             
             // Kamar tersedia
             $kamarTersediaResult = $this->db->fetchOne("
@@ -168,7 +166,7 @@ class Controller extends BaseController
             echo json_encode([
                 'success' => true,
                 'data' => [
-                    'terisi' => (int)$kamarTerisi,
+                    'ditempati' => (int)$kamarDitempati,
                     'tersedia' => (int)$kamarTersedia,
                     'maintenance' => (int)$kamarMaintenance
                 ]
